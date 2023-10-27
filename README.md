@@ -10,7 +10,7 @@ Flashpost is a lightweight Rest API Client Extension for Visual Studio Code.
 * Import collections and variables from Postman, Thunder Client.
 * Easily setup your Environment variables from the response.
 * Test API response easily with GUI based interface and without any scripts.
-* Local Storage: All the collection and request data are stored locally on your device.
+* Local Storage: All the collection and request data are stored locally on your device ({userhome}/Documents/Flashpost folder).
 
 ## 💡 How to use ?
 
