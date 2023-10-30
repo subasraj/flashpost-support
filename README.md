@@ -21,5 +21,51 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-search.gif?raw=true"/>
   <br/>
-  <sup><b>Flashpost v1.1.25</b></sup>
 </div>
+<br/>
+
+### <u>Importing/Creating New Collections</u>
+* Click on the icon next to filter collection to show the collection related operations.
+<br/><br/>
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-new-collection.png?raw=true"/>
+  <br/>
+</div>
+<br/>
+
+### <u>Run Tests</u>
+* Right click on folder or collection level and select "Run All" to execute all requests underneath it.
+<br/><br/>
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-runtests.png?raw=true"/>
+  <br/>
+</div>
+<br/>
+
+### <u>Flashpost Extension Settings</u>
+* Click on the icon on top right of side bar to open the Flashpost extension settings.
+* Customize your data storage path by changing "Custom Data Location" setting
+<br/><br/>
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-extension-settings.png?raw=true"/>
+  <br/>
+</div>
+<br/>
+
+### <u>History View</u>
+* New requests will be save in History tab. Number of history items to display can be controlled from extension setting "History Limit".
+<br/><br/>
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-history.png?raw=true"/>
+  <br/>
+</div>
+<br/>
+
+### <u>Environments View</u>
+* Select the active environment by menu item "Set Active".
+<br/><br/>
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-environment-setactive.png?raw=true"/>
+  <br/>
+</div>
+<br/>
