@@ -16,8 +16,8 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 
 ## 💡 How to use ?
 
-* Click the `Flashpost` icon on the action bar.
-* On the Flashpost `Quick Access` bar, click the `New Request` button to test the any API.
+* Click the `Flashpost` icon on the Activity Bar.
+* On the Flashpost `Quick Access` side bar, click the `New Request` button to test the any API.
 <br/><br/>
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-search.gif?raw=true"/>
