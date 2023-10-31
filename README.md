@@ -25,7 +25,7 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 </div>
 <br/>
 
-### Importing/Creating New Collections
+## Importing / Creating New Collections
 * Click on the icon next to filter collection to show collection related operations.
 <br/><br/>
 <div align="center">
@@ -34,8 +34,9 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 </div>
 <br/>
 
-### Run Tests
-* Right click on folder or collection level and select "Run All" to execute all requests underneath it.
+## Run Collection
+* Right click on folder or collection level and select "Run All" to test multiple requests.
+* The collection runner will execute all requests and test cases and display the result.
 <br/><br/>
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-runtests.png?raw=true"/>
@@ -43,7 +44,25 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 </div>
 <br/>
 
-### Flashpost Extension Settings
+## Scriptless Testing
+* No need for boilerplate code like in Postman and other api clients to do basic testing. Flashpost has an easy GUI to implement the same kind of testing.
+<br/><br/>
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-scriptless-testing.png?raw=true"/>
+  <br/>
+</div>
+<br/>
+
+## Set Environment Variables
+* Easily `Set Environment Variables` from response, Headers and Cookies in Set Variables tab.
+<br/><br/>
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-env-var-from-response.png?raw=true"/>
+  <br/>
+</div>
+<br/>
+
+## Flashpost Extension Settings
 * Click on the icon on top right corner of side bar to open Flashpost extension settings.
 * Customize your data storage path by changing "Custom Data Location" setting.
 <br/><br/>
@@ -53,7 +72,7 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 </div>
 <br/>
 
-### History View
+## History View
 * New requests will be save in History tab. Number of history items to display can be controlled by modifying "History Limit" extension setting.
 <br/><br/>
 <div align="center">
@@ -62,7 +81,7 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 </div>
 <br/>
 
-### Environments View
+## Environments View
 * Select the active environment by selecting "Set Active" menu option.
 <br/><br/>
 <div align="center">
