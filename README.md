@@ -10,8 +10,7 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 * <b>Import collections</b> and variables from Postman, Thunder Client.
 * Import and run curl requests.
 * Easily setup your Environment variables from the response.
-* <b>Scriptless Testing:</b> Test API response easily with GUI based interface.
-* Test API response easily with GUI based interface and without any scripts.
+* <b>Scriptless Testing:</b> Test API response easily with GUI based interface and without any scripts.
 * <b>Local Storage:</b> All collections and request data are stored locally on your device. You can also customize the location from Flashpost extension settings. The default path is $HOME/Documents/ folder.
 
 ## 💡 How to use ?
