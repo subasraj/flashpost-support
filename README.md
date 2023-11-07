@@ -52,6 +52,24 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 </div>
 <br/>
 
+## Code Snippet
+Code snippet generation is available for the following languages
+* C# - Http Client, Rest Sharp
+* Go - Native
+* Java - AsyncHttp, Unirest, OkHttp, NetHttp
+* JavaScript - Axios, Fetch, jQuery, XMLHttpRequest
+* PHP
+* Python
+* Shell
+
+Open request view and click the [</>] icon to see the Code Tab
+<br/><br/>
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-code-snippet.png?raw=true"/>
+  <br/>
+</div>
+<br/>
+
 ## Set Environment Variables
 * Easily `Set Environment Variables` from response, Headers and Cookies in Set Variables tab.
 <br/><br/>
