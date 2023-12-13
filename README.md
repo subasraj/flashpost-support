@@ -12,6 +12,7 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 * Easily setup your Environment variables from the response.
 * <b>Scriptless Testing:</b> Test API response easily with GUI based interface and without any scripts.
 * <b>Local Storage:</b> All collections and request data are stored locally on your device. You can also customize the location from Flashpost extension settings. The default path is $HOME/Documents/ folder.
+* <b>Save to workspace:</b> If you like to save requests data in your current workspace, you have options to do from Flashpost extension settings.
 
 ## 💡 How to use ?
 
@@ -82,6 +83,7 @@ Open request view and click the [</>] icon to see the Code Tab
 ## Flashpost Extension Settings
 * Click on the icon on top right corner of side bar to open Flashpost extension settings.
 * Customize your data storage path by changing "Custom Data Location" setting.
+* If you like to save requests data in your current workspace use "Save Data to Workspace" setting. You can also select a relative path by using "Workspace Data Relative Path" setting.
 <br/><br/>
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-extension-settings.png?raw=true"/>
