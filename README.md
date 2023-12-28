@@ -7,7 +7,7 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 * <b>Lightweight</b> REST API Client for VS Code.
 * <b>Simple and Easy</b> to use User Interface.
 * Supports Collections and Environment variables.
-* <b>Import collections</b> and environment from Postman, Thunder Client. If you are migrating from Postman or Thunder Client, you have the option to select multiple collection and environment files to import.
+* <b>Import collections</b> and environment from Postman, Thunder Client. If you want to migrate from Postman or Thunder Client, you have the option to select multiple collection and environment files to import.
 * Import and run curl requests.
 * Easily setup your Environment variables from the response.
 * <b>Scriptless Testing:</b> Test API response easily with GUI based interface and without any scripts.
