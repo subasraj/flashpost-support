@@ -7,12 +7,13 @@ Flashpost VS Code extension enables you to develop and test your REST APIs direc
 * <b>Lightweight</b> REST API Client for VS Code.
 * <b>Simple and Easy</b> to use User Interface.
 * Supports Collections and Environment variables.
-* <b>Import collections</b> and variables from Postman, Thunder Client.
+* <b>Import collections</b> and environment from Postman, Thunder Client. If you are migrating from Postman or Thunder Client, you have the option to select multiple collection and environment files to import.
 * Import and run curl requests.
 * Easily setup your Environment variables from the response.
 * <b>Scriptless Testing:</b> Test API response easily with GUI based interface and without any scripts.
 * <b>Local Storage:</b> All collections and request data are stored locally on your device. You can also customize the location from Flashpost extension settings. The default path is $HOME/Documents/ folder.
 * <b>Save to workspace:</b> If you like to save requests data in your current workspace, you have options to do from Flashpost extension settings.
+* <b>Use .env file variables from your workspace:</b> If you like to use your .env file varaibles from your workspace you have options to do from Flashpost extension settings.
 
 ## 💡 How to use ?
 
