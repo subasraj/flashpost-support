@@ -109,3 +109,11 @@ Open request view and click the [</>] icon to see the Code Tab
   <br/>
 </div>
 <br/>
+
+## Use predefined variables to return values
+
+Flashpost uses the [faker library](https://www.npmjs.com/package/@faker-js/faker) to generate sample data, including random names, addresses, email addresses, and much more. You can use these pre-defined variables multiple times to return different values per request.
+
+You can use these variables like any other variable in Flashpost. Their values are generated at the time of execution and their names start with a `$` symbol, for example `$guid` or `$timestamp`.
+
+For a completed list of dynamic variables please visit - [Random Variables List](https://github.com/subasraj/flashpost-support/blob/main/random-variables.md)
