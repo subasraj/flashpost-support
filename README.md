@@ -1,8 +1,8 @@
 # Flashpost - REST API Client for VS Code
 
-[![Visual Studio Marketplace](https://img.shields.io/visual-studio-marketplace/v/vasubasraj.flashpost)](https://marketplace.visualstudio.com/items?itemName=vasubasraj.flashpost)
-[![Downloads](https://img.shields.io/visual-studio-marketplace/d/vasubasraj.flashpost)](https://marketplace.visualstudio.com/items?itemName=vasubasraj.flashpost)
-[![Rating](https://img.shields.io/visual-studio-marketplace/r/vasubasraj.flashpost)](https://marketplace.visualstudio.com/items?itemName=vasubasraj.flashpost)
+[![Version](https://vsmarketplacebadges.dev/version/VASubasRaj.flashpost.svg)](https://marketplace.visualstudio.com/items?itemName=VASubasRaj.flashpost)
+[![Installs](https://vsmarketplacebadges.dev/installs/VASubasRaj.flashpost.svg)](https://marketplace.visualstudio.com/items?itemName=VASubasRaj.flashpost)
+[![Rating](https://vsmarketplacebadges.dev/rating/VASubasRaj.flashpost.svg)](https://marketplace.visualstudio.com/items?itemName=VASubasRaj.flashpost)
 
 Flashpost is a lightweight REST API client extension that enables you to develop and test your REST APIs directly from Visual Studio Code. Perfect for developers who want to stay in their IDE without switching to external tools.
 
@@ -14,7 +14,7 @@ Flashpost is a lightweight REST API client extension that enables you to develop
 - **📥 Import Support** - Seamlessly migrate from Postman and Thunder Client
 - **🔄 cURL Integration** - Import and execute cURL commands directly
 - **🧪 Scriptless Testing** - GUI-based testing without writing test scripts
-- **💾 Local Storage** - All data stored locally with customizable storage location
+- **💾 Local Storage** - All data stored locally in SQLite with customizable storage location
 - **🏢 Workspace Integration** - Save requests to your current workspace
 - **🔧 Environment Variables** - Support for .env files and dynamic variables
 - **📋 Code Generation** - Generate code snippets in multiple languages
@@ -44,6 +44,19 @@ Organize your API requests into collections for better project management.
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-new-collection.png?raw=true" alt="Creating Collections"/>
 </div>
+
+## 📦 Export All Collections
+
+Export your entire workspace — all collections, folders, requests, and environment variables — into a single JSON file.
+
+- Open the Collections tab in the sidebar
+- Click the menu icon and select **"Export All Collections"**
+- Choose a save location — all data is exported as a single `.json` file
+- The exported file includes:
+  - All collections with their folder hierarchy
+  - All requests with full configuration (headers, body, auth, tests, set variables)
+  - All environment variables with their active/inactive state
+- Import the exported file back using **"Import Collections"** — collections and variables are restored with the correct order and state
 
 ## 🏃‍♂️ Collection Runner
 
