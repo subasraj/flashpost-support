@@ -58,6 +58,97 @@ Export your entire workspace — all collections, folders, requests, and environ
   - All environment variables with their active/inactive state
 - Import the exported file back using **"Import Collections"** — collections and variables are restored with the correct order and state
 
+## 📝 Scripts (Pre-Request & Post-Response)
+
+Write JavaScript scripts that run before a request is sent or after a response is received. Scripts can modify requests, read responses, and manage variables — similar to Bruno's scripting API.
+
+### Usage
+1. Open any request and click the **Script** tab
+2. Select **Pre Request** or **Post Response**
+3. Write your JavaScript code in the editor
+4. Click **Send** — scripts execute automatically
+
+### Available API
+
+**`fp` / `bru` / `pm` object — Variable Management**
+
+| Method | Description |
+|--------|-------------|
+| `fp.getEnvVar(key)` | Get an environment variable |
+| `fp.setEnvVar(key, value)` | Set an environment variable (persisted) |
+| `fp.hasEnvVar(key)` | Check if env variable exists |
+| `fp.deleteEnvVar(key)` | Delete an environment variable |
+| `fp.getAllEnvVars()` | Get all env variables as object |
+| `fp.getEnvName()` | Get current environment name |
+| `fp.getGlobalEnvVar(key)` | Get a global variable |
+| `fp.setGlobalEnvVar(key, value)` | Set a global variable (persisted) |
+| `fp.getVar(key)` | Get a runtime variable |
+| `fp.setVar(key, value)` | Set a runtime variable (session only) |
+| `fp.interpolate(string)` | Resolve `{{variables}}` and `{{$randomName}}` |
+
+**`req` object — Request (Pre-Request only)**
+
+| Method | Description |
+|--------|-------------|
+| `req.getUrl()` / `req.setUrl(url)` | Get/set request URL |
+| `req.getMethod()` / `req.setMethod(method)` | Get/set HTTP method |
+| `req.getHeader(name)` / `req.setHeader(name, value)` | Get/set headers |
+| `req.getHeaders()` / `req.setHeaders(obj)` | Get/set all headers |
+| `req.deleteHeader(name)` | Remove a header |
+| `req.getBody()` / `req.setBody(data)` | Get/set request body |
+| `req.getHost()` / `req.getPath()` | Get URL parts |
+| `req.headerList` | Full PropertyList interface |
+
+**`res` object — Response (Post-Response only)**
+
+| Method | Description |
+|--------|-------------|
+| `res.status` / `res.getStatus()` | HTTP status code |
+| `res.body` / `res.getBody()` | Parsed response body |
+| `res.headers` / `res.getHeaders()` | Response headers object |
+| `res.getHeader(name)` | Get specific response header |
+| `res.responseTime` / `res.getResponseTime()` | Response time in ms |
+| `res.getSize()` | Response size in bytes |
+| `res.getRawBody()` | Raw response string |
+
+**Utilities**
+
+| Method | Description |
+|--------|-------------|
+| `console.log(value)` | Log to Flashpost output panel |
+| `atob(str)` / `btoa(str)` | Base64 decode/encode |
+| `fp.interpolate("{{$randomFirstName}}")` | Generate random data |
+
+### Example: Pre-Request Script
+```javascript
+// Add a timestamp header
+req.setHeader("X-Request-Time", new Date().toISOString());
+
+// Set auth token from environment
+const token = fp.getEnvVar("auth_token");
+req.setHeader("Authorization", "Bearer " + token);
+
+console.log("Sending to:", req.getUrl());
+```
+
+### Example: Post-Response Script
+```javascript
+// Save token from response
+const body = res.getBody();
+if (body.access_token) {
+  fp.setEnvVar("auth_token", body.access_token);
+}
+
+console.log("Status:", res.getStatus());
+console.log("Time:", res.getResponseTime(), "ms");
+```
+
+### Notes
+- Scripts run in a sandboxed environment (5 second timeout)
+- Script modifications to `req` only affect the current execution — they are NOT saved to the database
+- Variable changes via `fp.setEnvVar` / `fp.setGlobalEnvVar` ARE persisted
+- Output from `console.log` appears in the Flashpost output panel (View > Output > Flashpost)
+
 ## 🏃‍♂️ Collection Runner
 
 Execute multiple requests in sequence with the built-in collection runner.
