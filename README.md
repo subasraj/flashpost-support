@@ -60,7 +60,7 @@ Export your entire workspace — all collections, folders, requests, and environ
 
 ## 📝 Scripts (Pre-Request & Post-Response)
 
-Write JavaScript scripts that run before a request is sent or after a response is received. Scripts can modify requests, read responses, and manage variables — similar to Bruno's scripting API.
+Write JavaScript scripts that run before a request is sent or after a response is received. Scripts can modify requests, read responses, and manage variables.
 
 ### Usage
 1. Open any request and click the **Script** tab
