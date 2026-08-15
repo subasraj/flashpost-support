@@ -188,7 +188,7 @@ $randomPhone   // Random phone number
 
 ## 📋 System Requirements
 
-- **VS Code Version**: 1.74.0 or higher
+- **VS Code Version**: 1.109.0 or higher
 - **Operating System**: Windows, macOS, or Linux
 - **Node.js**: Not required (extension is self-contained)
 
