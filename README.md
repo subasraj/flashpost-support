@@ -70,7 +70,11 @@ Write JavaScript scripts that run before a request is sent or after a response i
 
 ### Available API
 
-**`fp` / `bru` / `pm` object — Variable Management**
+**`fp` / `bru` / `pm` / `tc` object — Variable Management**
+
+All four objects (`fp`, `bru`, `pm`, `tc`) are interchangeable. They also expose `request` and `response` sub-objects:
+- `fp.request.*` / `bru.request.*` / `pm.request.*` / `tc.request.*` — same as `req.*`
+- `fp.response.*` / `bru.response.*` / `pm.response.*` / `tc.response.*` — same as `res.*`
 
 | Method | Description |
 |--------|-------------|
@@ -148,6 +152,8 @@ console.log("Time:", res.getResponseTime(), "ms");
 - Script modifications to `req` only affect the current execution — they are NOT saved to the database
 - Variable changes via `fp.setEnvVar` / `fp.setGlobalEnvVar` ARE persisted
 - Output from `console.log` appears in the Flashpost output panel (View > Output > Flashpost)
+
+📋 **[Complete Script API Reference](https://github.com/subasraj/flashpost-support/blob/main/SCRIPT-API.md)**
 
 ## 🏃‍♂️ Collection Runner
 
