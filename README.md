@@ -215,7 +215,7 @@ Dynamically set environment variables from API responses, headers, and cookies.
 Customize Flashpost to fit your workflow:
 
 - **Custom Data Location** - Choose where to store your collections and data
-- **Save to Workspace** - Store request data in your current workspace
+- **Save to Workspace** - Store request data in your current workspace as git-friendly JSON files
 - **Workspace Relative Path** - Set a custom relative path for workspace data
 - **History Limit** - Control how many historical requests to keep
 
@@ -224,6 +224,26 @@ Access settings by clicking the gear icon in the top-right corner of the sidebar
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-extension-settings.png?raw=true" alt="Extension Settings"/>
 </div>
+
+## 💾 Workspace Storage (Git-Friendly)
+
+When **"Save Data To Workspace"** is enabled, Flashpost stores all data as human-readable JSON files instead of a binary SQLite database. This makes your API collections git-friendly — you can commit, diff, and share them with your team.
+
+**Files saved to your workspace:**
+```
+flashpost-tests/
+  requests.json           ← All API requests (commit to git)
+  collection_tree.json    ← Collection/folder hierarchy (commit to git)
+  history.json            ← Request history (commit to git)
+  variables.json          ← Environment variables (commit to git)
+  cookies.json            ← Cookie storage (commit to git)
+  user_preferences.json   ← User preferences (commit to git)
+```
+
+- All files are formatted JSON (2-space indent) for clean diffs
+- SQLite is used in-memory for fast queries — JSON files are the persistence layer
+- No binary files — everything is readable and mergeable
+- Team members opening the project automatically load the shared data
 
 ## 📜 History Management
 
