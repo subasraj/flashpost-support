@@ -162,6 +162,29 @@ console.log("Time:", res.getResponseTime(), "ms");
 - Script modifications to `req` only affect the current execution — they are NOT saved to the database
 - Variable changes via `fp.setEnvVar` / `fp.setGlobalEnvVar` ARE persisted
 - Output from `console.log` appears in the Flashpost output panel (View > Output > Flashpost)
+- `request` and `response` are aliases for `req` and `res`
+- `postman.setEnvironmentVariable(key, value)` / `postman.getEnvironmentVariable(key)` are supported for Postman compatibility
+- `CryptoJS` is available in scripts (SHA256, HmacSHA256, enc.Base64, etc.)
+- `crypto` is also available with both Node.js and CryptoJS-style APIs
+
+### Collection & Folder Scripts
+
+Scripts can be defined at the collection or folder level via **Settings → Scripts**. These run automatically for all requests in the collection/folder:
+
+- **Execution order (Pre-Request):** Collection script → Folder script → Request script
+- **Execution order (Post-Response):** Request script → Folder script → Collection script
+- When importing from Postman, collection/folder-level scripts are preserved in Settings
+
+### Collection Environment
+
+Attach an environment to a collection via **Collection Settings → Environment**:
+
+- Requests in the collection automatically use the attached environment's variables
+- Overrides the active (starred) environment for that collection
+- Variable highlighting in request panels reflects the attached environment
+- Changes are applied in real-time — no need to reload requests
+- Variables set by scripts are saved to the attached environment (not the active one)
+- Keyboard shortcut: **Ctrl+S / Cmd+S** to save Collection/Folder/Environment settings
 
 ### Script-Based Testing (`fp.test` / `fp.expect`)
 

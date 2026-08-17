@@ -6,6 +6,28 @@ Flashpost provides scripting capabilities in two execution contexts:
 
 Scripts run in a sandboxed JavaScript environment with a 5-second timeout.
 
+## Script Levels
+
+Scripts can be defined at three levels:
+1. **Collection level** — Settings → Scripts (applies to all requests in the collection)
+2. **Folder level** — Settings → Scripts (applies to all requests in the folder)
+3. **Request level** — Script tab on the request
+
+**Execution order (Pre-Request):** Collection → Folder → Request
+
+**Execution order (Post-Response):** Request → Folder → Collection
+
+Variable changes from each script stage are carried forward to the next.
+
+## Collection Environment
+
+An environment can be attached to a collection via **Collection Settings → Environment**:
+
+- When attached, all requests in the collection use that environment's variables instead of the active (starred) environment
+- Scripts (`fp.setEnvVar`, `postman.setEnvironmentVariable`) persist changes to the attached environment
+- Global variables (`fp.setGlobalEnvVar`) are always saved to the Global environment regardless of the attached environment
+- Variable highlighting (`{{variable}}` green/red) in request panels reflects the attached environment in real-time
+
 ## Global Objects
 
 The following objects are available in both Pre Request and Post Response scripts:
@@ -16,8 +38,11 @@ The following objects are available in both Pre Request and Post Response script
 | `bru` | Alias for `fp` (Bruno compatibility) |
 | `pm` | Alias for `fp` (Postman compatibility) |
 | `tc` | Alias for `fp` (Thunder Client compatibility) |
-| `req` | Request object |
-| `res` | Response object (data available in Post Response only) |
+| `req` / `request` | Request object |
+| `res` / `response` | Response object (data available in Post Response only) |
+| `postman` | Legacy Postman API (`setEnvironmentVariable`, `getEnvironmentVariable`, etc.) |
+| `CryptoJS` | CryptoJS-compatible crypto library |
+| `crypto` | Node.js crypto + CryptoJS-style convenience methods |
 | `console` | Logging (`log`, `info`, `warn`, `error`, `debug`) |
 
 ### Sub-object Access
@@ -611,6 +636,59 @@ const payload = JSON.stringify(req.getBody());
 const signature = fp.hmacSha256(payload, fp.getEnvVar("secret_key"));
 req.setHeader("X-Signature", signature);
 ```
+
+---
+
+## Postman Compatibility
+
+Legacy Postman scripting APIs are supported:
+
+| Method | Equivalent |
+|--------|-----------|
+| `postman.setEnvironmentVariable(key, value)` | `fp.setEnvVar(key, value)` |
+| `postman.getEnvironmentVariable(key)` | `fp.getEnvVar(key)` |
+| `postman.getGlobalVariable(key)` | `fp.getGlobalEnvVar(key)` |
+| `postman.setGlobalVariable(key, value)` | `fp.setGlobalEnvVar(key, value)` |
+| `postman.clearEnvironmentVariable(key)` | `fp.deleteEnvVar(key)` |
+| `postman.clearGlobalVariable(key)` | `fp.deleteGlobalEnvVar(key)` |
+
+Additionally, `request` and `response` are aliases for `req` and `res`:
+- `request.url`, `request.method`, `request.data` — direct property access
+- `response` — same as `res`
+
+---
+
+## CryptoJS
+
+A CryptoJS-compatible library is available in scripts:
+
+```javascript
+// SHA-256 hash
+var hash = CryptoJS.SHA256("data");
+var base64 = CryptoJS.enc.Base64.stringify(hash);
+
+// HMAC-SHA256
+var key = CryptoJS.enc.Base64.parse("base64key");
+var hmac = CryptoJS.HmacSHA256("data", key);
+var signature = CryptoJS.enc.Base64.stringify(hmac);
+
+// Available hash functions
+CryptoJS.SHA256(data)
+CryptoJS.HmacSHA256(data, key)
+CryptoJS.HmacSHA1(data, key)
+CryptoJS.HmacSHA512(data, key)
+CryptoJS.MD5(data)
+
+// Encoders
+CryptoJS.enc.Base64.stringify(wordArray)  // to Base64
+CryptoJS.enc.Base64.parse(base64String)   // from Base64
+CryptoJS.enc.Hex.stringify(wordArray)     // to hex
+CryptoJS.enc.Hex.parse(hexString)         // from hex
+CryptoJS.enc.Utf8.parse(string)           // string to word array
+CryptoJS.enc.Utf8.stringify(wordArray)    // word array to string
+```
+
+The `crypto` object also provides the same CryptoJS-style API plus Node.js native methods (`crypto.createHash`, `crypto.createHmac`, `crypto.randomBytes`).
 
 ---
 
