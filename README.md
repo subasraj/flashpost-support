@@ -122,6 +122,16 @@ All four objects (`fp`, `bru`, `pm`, `tc`) are interchangeable. They also expose
 | `console.log(value)` | Log to Flashpost output panel |
 | `atob(str)` / `btoa(str)` | Base64 decode/encode |
 | `fp.interpolate("{{$randomFirstName}}")` | Generate random data |
+| `fp.sha256(data)` | SHA-256 hash (hex string) |
+| `fp.md5(data)` | MD5 hash (hex string) |
+| `fp.hmacSha256(data, key)` | HMAC-SHA256 (hex string) |
+
+### Example: AWS Lambda Function URL / CloudFront OAC
+```javascript
+// Add x-amz-content-sha256 header (required for Lambda Function URL / CloudFront OAC)
+const body = req.getBody({ raw: true }) || "";
+req.setHeader("x-amz-content-sha256", fp.sha256(body));
+```
 
 ### Example: Pre-Request Script
 ```javascript
@@ -153,6 +163,47 @@ console.log("Time:", res.getResponseTime(), "ms");
 - Variable changes via `fp.setEnvVar` / `fp.setGlobalEnvVar` ARE persisted
 - Output from `console.log` appears in the Flashpost output panel (View > Output > Flashpost)
 
+### Script-Based Testing (`fp.test` / `fp.expect`)
+
+Write assertions in Post-Response scripts using a Chai-style API. Results appear in the **Tests** tab.
+
+**`fp.test(name, fn)`** — Define a named test case
+
+**`fp.expect(value)`** — Create a chainable assertion
+
+| Assertion | Description |
+|-----------|-------------|
+| `.to.equal(val)` | Strict equality (`===`) |
+| `.to.eql(val)` | Deep equality (objects, arrays) |
+| `.to.include(val)` | Contains (string/array/object) |
+| `.to.be.a(type)` | Type check (`"string"`, `"number"`, `"array"`, etc.) |
+| `.to.be.above(n)` / `.below(n)` | Numeric comparisons |
+| `.to.be.at.least(n)` / `.at.most(n)` | Inclusive comparisons |
+| `.to.be.within(min, max)` | Range check |
+| `.to.be.ok` / `.true` / `.false` / `.null` / `.undefined` / `.empty` | Truthiness |
+| `.to.have.property(key)` | Property exists |
+| `.to.have.length(n)` | Array/string length |
+| `.to.have.members(arr)` | Same array members |
+| `.to.have.status(code)` | Response status |
+| `.to.have.header(name)` | Response header exists |
+| `.not.equal(val)` | Negation (works with all assertions) |
+
+```javascript
+fp.test("Status is 200", () => {
+  fp.expect(res.getStatus()).to.equal(200);
+});
+
+fp.test("Body structure", () => {
+  const body = res.getBody();
+  fp.expect(body).to.have.property("data");
+  fp.expect(body.data).to.be.an("array").and.not.be.empty;
+  fp.expect(body.data[0]).to.have.all.keys(["id", "name", "email"]);
+});
+
+fp.test("Performance", () => {
+  fp.expect(res.getResponseTime()).to.be.below(500);
+});
+```
 📋 **[Complete Script API Reference](https://github.com/subasraj/flashpost-support/blob/main/SCRIPT-API.md)**
 
 ## 🏃‍♂️ Collection Runner

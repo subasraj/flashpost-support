@@ -345,6 +345,275 @@ console.error("Something went wrong:", "details here");
 
 ---
 
+## fp.test / fp.expect — Testing & Assertions
+
+Flashpost includes a built-in Chai-style assertion library. Use `fp.test()` to define named test cases and `fp.expect()` to write assertions. Test results appear in the **Tests** tab of the response panel.
+
+> These APIs are available in **Post Response** scripts. They also work in Pre Request scripts, but response data will be empty.
+
+### fp.test(name, fn)
+
+Wraps assertions in a named test case. If `fn` throws, the test fails; otherwise it passes.
+
+```javascript
+fp.test("Status is 200", () => {
+  fp.expect(res.getStatus()).to.equal(200);
+});
+
+fp.test("Response has user data", () => {
+  const body = res.getBody();
+  fp.expect(body).to.have.property("id");
+  fp.expect(body.name).to.be.a("string");
+});
+```
+
+### fp.expect(value)
+
+Creates a chainable assertion on `value`. Use chaining words `.to`, `.that`, `.which`, `.and` for readability (they are no-ops).
+
+---
+
+### Equality
+
+| Assertion | Description |
+|-----------|-------------|
+| `.eql(expected)` | Deep equality (objects, arrays) |
+| `.equal(expected)` | Strict equality (`===`) |
+| `.deep.equal(expected)` | Deep equality (alias for `.eql`) |
+
+```javascript
+fp.expect(res.getStatus()).to.equal(200);
+fp.expect(res.getBody()).to.eql({ success: true, id: 1 });
+fp.expect(data).to.deep.equal(expected);
+```
+
+---
+
+### Inclusion
+
+| Assertion | Description |
+|-----------|-------------|
+| `.include(expected)` | String contains substring, array contains element, or object contains subset |
+| `.deep.include(expected)` | Array deep-includes an item |
+| `.oneOf(list)` | Value is one of the items in list |
+
+```javascript
+fp.expect("hello world").to.include("world");
+fp.expect([1, 2, 3]).to.include(2);
+fp.expect({ a: 1, b: 2 }).to.include({ a: 1 });
+fp.expect([{id: 1}]).to.deep.include({id: 1});
+fp.expect(res.getStatus()).to.oneOf([200, 201]);
+```
+
+---
+
+### Type Checks
+
+| Assertion | Description |
+|-----------|-------------|
+| `.be.a(type)` | Assert `typeof` value (or `"array"` / `"null"`) |
+| `.be.an(type)` | Alias for `.be.a(type)` |
+
+Valid types: `"string"`, `"number"`, `"boolean"`, `"object"`, `"array"`, `"null"`, `"undefined"`
+
+```javascript
+fp.expect("hello").to.be.a("string");
+fp.expect([1,2]).to.be.an("array");
+fp.expect(42).to.be.a("number");
+```
+
+---
+
+### Numeric Comparisons
+
+| Assertion | Description |
+|-----------|-------------|
+| `.be.above(n)` | Greater than `n` |
+| `.be.below(n)` | Less than `n` |
+| `.be.at.least(n)` | Greater than or equal to `n` |
+| `.be.at.most(n)` | Less than or equal to `n` |
+| `.be.within(min, max)` | Value is between `min` and `max` (inclusive) |
+
+```javascript
+fp.expect(res.getResponseTime()).to.be.below(500);
+fp.expect(res.getStatus()).to.be.within(200, 299);
+fp.expect(data.count).to.be.at.least(1);
+```
+
+---
+
+### Truthiness
+
+| Assertion | Description |
+|-----------|-------------|
+| `.be.ok` | Truthy value |
+| `.be.true` | Strictly `true` |
+| `.be.false` | Strictly `false` |
+| `.be.null` | Strictly `null` |
+| `.be.undefined` | Strictly `undefined` |
+| `.be.NaN` | Is `NaN` |
+| `.be.empty` | Empty array, string, or object (no keys) |
+
+```javascript
+fp.expect(body.active).to.be.true;
+fp.expect(body.deletedAt).to.be.null;
+fp.expect([]).to.be.empty;
+fp.expect(body.name).to.be.ok;
+```
+
+---
+
+### Property & Keys
+
+| Assertion | Description |
+|-----------|-------------|
+| `.have.property(prop)` | Object has the named property |
+| `.have.property(prop, value)` | Property exists and equals value |
+| `.have.keys(keyList)` | Object has all specified keys |
+| `.have.all.keys(keyList)` | Object has all specified keys |
+| `.have.any.keys(keyList)` | Object has at least one of the keys |
+
+```javascript
+fp.expect(body).to.have.property("id");
+fp.expect(body).to.have.property("status", "active");
+fp.expect(body).to.have.keys(["id", "name", "email"]);
+fp.expect(body).to.have.any.keys(["error", "message"]);
+```
+
+---
+
+### Length & Members
+
+| Assertion | Description |
+|-----------|-------------|
+| `.have.length(n)` | Array or string has length `n` |
+| `.have.lengthOf(n)` | Alias for `.have.length(n)` |
+| `.have.members(list)` | Array has the same members (order-independent) |
+
+```javascript
+fp.expect(body.items).to.have.length(10);
+fp.expect([3, 1, 2]).to.have.members([1, 2, 3]);
+```
+
+---
+
+### Response-Specific Assertions
+
+| Assertion | Description |
+|-----------|-------------|
+| `.have.status(code)` | Assert response status code (number) or status text (string) |
+| `.have.header(name)` | Assert response has the header |
+| `.have.header(name, value)` | Assert header includes value |
+| `.have.body(expected)` | Assert raw body equals string |
+| `.have.jsonBody()` | Assert response has a JSON body |
+| `.have.jsonBody(prop)` | Assert JSON body has a property |
+
+```javascript
+fp.test("Response checks", () => {
+  fp.expect(res).to.have.status(200);
+  fp.expect(res).to.have.header("content-type", "application/json");
+  fp.expect(res).to.have.jsonBody("data");
+});
+```
+
+---
+
+### Negation (`.not`)
+
+Prefix any assertion with `.not` to negate it.
+
+| Assertion | Description |
+|-----------|-------------|
+| `.not.equal(val)` | Not strictly equal |
+| `.not.eql(val)` | Not deep-equal |
+| `.not.include(val)` | Does not contain |
+| `.not.be.undefined` | Is defined |
+| `.not.be.null` | Not null |
+| `.not.be.empty` | Not empty |
+| `.not.be.above(n)` | Not above `n` |
+| `.not.be.below(n)` | Not below `n` |
+| `.not.have.property(prop)` | Property does not exist |
+| `.not.have.keys(keyList)` | None of the keys exist |
+| `.not.have.any.keys(keyList)` | None of the keys exist |
+| `.not.oneOf(list)` | Value is not in list |
+
+```javascript
+fp.expect(body.error).not.be.undefined;
+fp.expect(res.getStatus()).not.equal(404);
+fp.expect(body.items).not.be.empty;
+fp.expect(body).not.have.property("password");
+```
+
+---
+
+### Chaining
+
+Assertions are chainable. Language chains (`.to`, `.that`, `.which`, `.and`) are for readability and have no effect.
+
+```javascript
+fp.test("Full response validation", () => {
+  const body = res.getBody();
+
+  fp.expect(res.getStatus()).to.equal(200);
+  fp.expect(body).to.be.an("object").and.have.property("users");
+  fp.expect(body.users).to.be.an("array").and.have.length(5);
+  fp.expect(body.users[0]).to.have.all.keys(["id", "name", "email"]);
+  fp.expect(res.getResponseTime()).to.be.below(1000);
+});
+```
+
+---
+
+### Complete Test Example
+
+```javascript
+fp.test("Status is 200 OK", () => {
+  fp.expect(res.getStatus()).to.equal(200);
+});
+
+fp.test("Response time is acceptable", () => {
+  fp.expect(res.getResponseTime()).to.be.below(2000);
+});
+
+fp.test("Body has expected structure", () => {
+  const body = res.getBody();
+  fp.expect(body).to.have.property("data");
+  fp.expect(body.data).to.be.an("array");
+  fp.expect(body.data).not.be.empty;
+  fp.expect(body.data[0]).to.have.all.keys(["id", "name", "email"]);
+});
+
+fp.test("Pagination works", () => {
+  const body = res.getBody();
+  fp.expect(body.page).to.equal(1);
+  fp.expect(body.total).to.be.at.least(1);
+  fp.expect(body.data.length).to.be.at.most(20);
+});
+```
+
+---
+
+## Crypto Utilities
+
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `fp.sha256(data)` | `string` | SHA-256 hash (hex string) |
+| `fp.md5(data)` | `string` | MD5 hash (hex string) |
+| `fp.hmacSha256(data, key)` | `string` | HMAC-SHA256 (hex string) |
+
+```javascript
+// AWS Signature: content hash for Lambda Function URL / CloudFront OAC
+const body = req.getBody({ raw: true }) || "";
+req.setHeader("x-amz-content-sha256", fp.sha256(body));
+
+// API request signing
+const payload = JSON.stringify(req.getBody());
+const signature = fp.hmacSha256(payload, fp.getEnvVar("secret_key"));
+req.setHeader("X-Signature", signature);
+```
+
+---
+
 ## Security & Limitations
 
 - Scripts run in a **sandboxed** Node.js `vm` context
