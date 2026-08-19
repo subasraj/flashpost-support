@@ -692,6 +692,79 @@ The `crypto` object also provides the same CryptoJS-style API plus Node.js nativ
 
 ---
 
+## Cookie Jar API (`fp.cookies`)
+
+Flashpost provides a Postman-compatible Cookie Jar scripting API. Cookies are managed by a centralized cookie jar that automatically captures `Set-Cookie` headers and injects `Cookie` headers on matching requests.
+
+The same API is available on all alias objects: `fp.cookies`, `pm.cookies`, `bru.cookies`, `tc.cookies`.
+
+### Methods
+
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `fp.cookies.get(name)` | `string \| undefined` | Get a cookie value by name (searches all domains) |
+| `fp.cookies.has(name)` | `boolean` | Check if a cookie with this name exists |
+| `fp.cookies.getAll(url?)` | `object[]` | Get all cookies (optionally filtered by URL domain). Returns `[{name, value, domain, path}]` |
+| `fp.cookies.set(url, name, value, options?)` | `void` | Create or update a cookie in the jar |
+| `fp.cookies.unset(url, name)` | `void` | Delete a cookie by name for the given URL's domain |
+| `fp.cookies.clear(url)` | `void` | Delete all cookies for the given URL's domain |
+| `fp.cookies.clearAll()` | `void` | Delete all cookies in the jar |
+
+### `set()` Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `path` | `string` | `"/"` | Cookie path |
+| `secure` | `boolean` | `false` | Only send over HTTPS |
+| `httpOnly` | `boolean` | `false` | Mark as HttpOnly |
+| `maxAge` | `number` | `null` | Expiration in seconds (null = session cookie) |
+
+### Examples
+
+```javascript
+// Get a cookie value
+const session = fp.cookies.get("SESSIONID");
+console.log("Session:", session);
+
+// Check if a cookie exists
+if (fp.cookies.has("csrf_token")) {
+  req.setHeader("X-CSRF-Token", fp.cookies.get("csrf_token"));
+}
+
+// Set a cookie manually
+fp.cookies.set("https://api.example.com", "auth_token", "abc123", {
+  secure: true,
+  path: "/api",
+  maxAge: 3600
+});
+
+// Get all cookies for a domain
+const cookies = fp.cookies.getAll("https://api.example.com");
+console.log("Cookies:", JSON.stringify(cookies));
+
+// Delete a specific cookie
+fp.cookies.unset("https://api.example.com", "old_session");
+
+// Clear all cookies for a domain
+fp.cookies.clear("https://api.example.com");
+
+// Clear the entire cookie jar
+fp.cookies.clearAll();
+```
+
+### Cookie Jar Behavior
+
+- Cookies are automatically captured from `Set-Cookie` response headers
+- Cookies are automatically attached to matching outgoing requests (by domain, path, and secure flag)
+- Expired cookies (via `Max-Age` or `Expires`) are automatically removed
+- Cookies with `Max-Age=0` are immediately deleted from the jar
+- Secure cookies are only sent over HTTPS
+- Manual `Cookie` headers set by the user take precedence over jar cookies
+- The cookie jar can be disabled per-request via **Settings → Disable Cookie Jar**
+- Cookie changes made via `fp.cookies.set()` are persisted to the database
+
+---
+
 ## Security & Limitations
 
 - Scripts run in a **sandboxed** Node.js `vm` context

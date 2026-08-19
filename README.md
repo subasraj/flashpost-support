@@ -3,6 +3,7 @@
 [![Version](https://vsmarketplacebadges.dev/version/VASubasRaj.flashpost.svg)](https://marketplace.visualstudio.com/items?itemName=VASubasRaj.flashpost)
 [![Installs](https://vsmarketplacebadges.dev/installs/VASubasRaj.flashpost.svg)](https://marketplace.visualstudio.com/items?itemName=VASubasRaj.flashpost)
 [![Rating](https://vsmarketplacebadges.dev/rating/VASubasRaj.flashpost.svg)](https://marketplace.visualstudio.com/items?itemName=VASubasRaj.flashpost)
+[![Open VSX](https://img.shields.io/open-vsx/v/VASubasRaj/flashpost)](https://open-vsx.org/extension/VASubasRaj/flashpost)
 
 Flashpost is a lightweight REST API client extension that enables you to develop and test your REST APIs directly from Visual Studio Code. Perfect for developers who want to stay in their IDE without switching to external tools.
 
@@ -18,7 +19,7 @@ Flashpost is a lightweight REST API client extension that enables you to develop
 - **🏢 Workspace Integration** - Save requests to your current workspace
 - **🔧 Environment Variables** - Support for .env files and dynamic variables
 - **📋 Code Generation** - Generate code snippets in multiple languages
-- **🍪 Cookie Management** - Automatic cookie handling and management
+- **🍪 Cookie Management** - Postman-compatible cookie jar with automatic capture, domain/path matching, and scripting API
 - **📊 Collection Runner** - Execute multiple requests in batch
 - **🔍 GraphQL Support** - Built-in GraphQL query support
 
@@ -28,6 +29,8 @@ Flashpost is a lightweight REST API client extension that enables you to develop
 2. **Open Flashpost** - Click the Flashpost icon in the Activity Bar
 3. **Create Your First Request** - Click "New Request" in the Quick Access sidebar
 4. **Test Your API** - Enter your endpoint, configure headers, and hit send!
+
+📖 **[Full User Manual](https://github.com/subasraj/flashpost-support/blob/main/USER-MANUAL.md)** - Comprehensive guide covering all features in detail.
 
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-search.gif?raw=true" alt="Flashpost Quick Start"/>
@@ -228,6 +231,15 @@ fp.test("Performance", () => {
 });
 ```
 📋 **[Complete Script API Reference](https://github.com/subasraj/flashpost-support/blob/main/SCRIPT-API.md)**
+
+### Quick Environment Switch
+
+Switch the active environment without leaving the editor:
+
+- **Command Palette:** `Flashpost: Change Environment`
+- **Keyboard shortcut:** `Ctrl+Shift+E` (Windows/Linux) / `Cmd+Shift+E` (macOS)
+- Shows all environments with the current active one marked ⭐
+- Updates the sidebar, open request panels, and variable highlighting immediately
 
 ## 🏃‍♂️ Collection Runner
 

@@ -573,18 +573,85 @@ Generate ready-to-use code snippets from your configured requests.
 
 ## Cookie Management
 
-Flashpost automatically handles cookies from API responses.
+Flashpost includes a Postman-compatible Cookie Jar that automatically captures, stores, and sends cookies.
+
+### How the Cookie Jar Works
+
+1. When a response includes `Set-Cookie` headers, Flashpost parses and stores each cookie with its attributes (domain, path, expires, secure, httpOnly)
+2. On subsequent requests, matching cookies are automatically attached as a `Cookie` header
+3. Cookies are matched by **domain**, **path**, and **secure** flag
+4. Expired cookies are automatically removed from the jar
+
+### Cookie Matching Rules
+
+| Rule | Behavior |
+|------|----------|
+| Domain | `example.com` cookies are sent to `example.com` and `api.example.com` |
+| Path | `/api` cookies are sent to `/api`, `/api/users`, but NOT `/other` |
+| Secure | Cookies with `Secure` flag are only sent over HTTPS |
+| Expiration | Cookies with expired `Max-Age` or `Expires` are not sent |
 
 ### Viewing Cookies
 
 - Response cookies appear in the **Cookies** tab of the response panel
-- All stored cookies are accessible via **Manage Cookies** (from the sidebar menu `...`)
+- All stored cookies are accessible via **Settings → Manage Cookies** on any request
 
-### Cookie Behavior
+### Manage Cookies Panel
 
-- Cookies are stored locally and sent automatically with subsequent requests to the same domain
-- You can manually add, edit, or delete cookies
-- Cookie storage persists across sessions
+Access via **Settings tab → Manage Cookies** or the sidebar `...` menu:
+
+- View all cookies in a table with columns: Name, Value, Domain, Path, Expires, Flags
+- Filter by domain using the dropdown
+- Delete individual cookies (✕ button per row)
+- Delete all cookies for a domain
+- Delete all cookies in the jar
+
+### Disable Cookie Jar Per Request
+
+To prevent a specific request from using the cookie jar:
+
+1. Open the request
+2. Go to the **Settings** tab
+3. Check **"Disable Cookie Jar for this request"**
+
+When disabled, no cookies are attached to the request and no `Set-Cookie` headers from the response are stored.
+
+### Cookie Scripting API
+
+Manage cookies programmatically in pre-request or post-response scripts:
+
+```javascript
+// Get a cookie value
+const token = fp.cookies.get("auth_token");
+
+// Set a cookie
+fp.cookies.set("https://api.example.com", "session", "abc123", {
+  secure: true,
+  path: "/api",
+  maxAge: 3600
+});
+
+// Check if a cookie exists
+if (fp.cookies.has("csrf_token")) {
+  req.setHeader("X-CSRF-Token", fp.cookies.get("csrf_token"));
+}
+
+// Get all cookies for a domain
+const cookies = fp.cookies.getAll("https://api.example.com");
+
+// Delete a cookie
+fp.cookies.unset("https://api.example.com", "old_session");
+
+// Clear all cookies for a domain
+fp.cookies.clear("https://api.example.com");
+
+// Clear entire jar
+fp.cookies.clearAll();
+```
+
+### Manual Cookie Header Precedence
+
+If you manually add a `Cookie` header on a request, your values take precedence over the jar. For example, if the jar has `session=from_jar` and you manually set `Cookie: session=manual`, the server receives `session=manual`.
 
 ---
 
