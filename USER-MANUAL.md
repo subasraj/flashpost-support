@@ -23,16 +23,17 @@
 15. [Set Variables from Response](#set-variables-from-response)
 16. [Collection Runner](#collection-runner)
 17. [Code Snippet Generation](#code-snippet-generation)
-18. [Cookie Management](#cookie-management)
-19. [GraphQL Support](#graphql-support)
-20. [Dynamic Variables](#dynamic-variables)
-21. [Import & Export](#import--export)
-22. [cURL Integration](#curl-integration)
-23. [History](#history)
-24. [Extension Settings](#extension-settings)
-25. [Workspace Storage](#workspace-storage)
-26. [Keyboard Shortcuts](#keyboard-shortcuts)
-27. [Troubleshooting](#troubleshooting)
+18. [Saved Response Examples](#saved-response-examples)
+19. [Cookie Management](#cookie-management)
+20. [GraphQL Support](#graphql-support)
+21. [Dynamic Variables](#dynamic-variables)
+22. [Import & Export](#import--export)
+23. [cURL Integration](#curl-integration)
+24. [History](#history)
+25. [Extension Settings](#extension-settings)
+26. [Workspace Storage](#workspace-storage)
+27. [Keyboard Shortcuts](#keyboard-shortcuts)
+28. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -571,6 +572,40 @@ Generate ready-to-use code snippets from your configured requests.
 
 ---
 
+## Saved Response Examples
+
+Save API responses as reusable examples directly under requests in the collection tree — similar to Postman's Examples feature.
+
+### Saving a Response
+
+1. Send a request and receive a response
+2. Click the **"Save Response"** button in the response panel toolbar (next to the code snippet icon)
+3. Enter a name for the example (or use the default)
+4. The response is saved as a child node under the request in the collection tree
+
+### Viewing Examples
+
+- Saved examples appear as child nodes under their parent request in the sidebar
+- Each example shows an HTTP status badge (e.g., `200`, `404`)
+- Click an example to open it in its own tab with the full request and response data
+
+### Managing Examples
+
+- **Rename** — Right-click an example and select "Rename"
+- **Delete** — Right-click and select "Delete", or select it and press `Delete`/`Backspace`
+- **Reorder** — Drag and drop examples to reorder within their parent request
+- **Expand/Collapse** — Click the arrow or press `Arrow Right`/`Left` on a request to show/hide its examples
+
+### Behavior
+
+- **Full snapshot** — Both the request configuration and the response (status, headers, cookies, body, timing) are persisted
+- **Duplicate** — When duplicating a request, its saved examples are also duplicated
+- **Delete cascade** — Deleting a request also removes all its saved examples
+- **Tab sync** — Renaming an example updates the corresponding open tab title
+- **Workspace mode** — Examples are exported as `responses.json` for git-friendly storage
+
+---
+
 ## Cookie Management
 
 Flashpost includes a Postman-compatible Cookie Jar that automatically captures, stores, and sends cookies.
@@ -809,7 +844,9 @@ flashpost-tests/
   collection_tree.json    - Collection/folder hierarchy
   history.json            - Request history
   variables.json          - Environment variables
-  cookies.json            - Cookie storage
+  cookies.json            - Cookie storage (legacy)
+  cookies_v2.json         - Cookie jar (individual cookies with attributes)
+  responses.json          - Saved response examples
   user_preferences.json   - User preferences
 ```
 
@@ -830,9 +867,13 @@ Team members who open the project automatically load the shared API data.
 |----------|--------|
 | `Ctrl+Shift+E` / `Cmd+Shift+E` | Change active environment |
 | `Ctrl+S` / `Cmd+S` | Save current request/settings |
+| `Ctrl+C` / `Cmd+C` | Copy selected sidebar item |
+| `Ctrl+V` / `Cmd+V` | Paste copied item |
 | `Delete` / `Backspace` | Delete selected sidebar item |
-| `Enter` | Open selected sidebar item |
-| `Arrow Up` / `Arrow Down` | Navigate sidebar items |
+| `Enter` / `Space` | Open selected request/example or toggle collection/folder |
+| `Arrow Up` / `Arrow Down` | Navigate sidebar tree items |
+| `Arrow Right` | Expand collection/folder, or move to first child |
+| `Arrow Left` | Collapse collection/folder, or move to parent |
 
 ---
 

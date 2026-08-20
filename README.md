@@ -20,7 +20,8 @@ Flashpost is a lightweight REST API client extension that enables you to develop
 - **🔧 Environment Variables** - Support for .env files and dynamic variables
 - **📋 Code Generation** - Generate code snippets in multiple languages
 - **🍪 Cookie Management** - Postman-compatible cookie jar with automatic capture, domain/path matching, and scripting API
-- **📊 Collection Runner** - Execute multiple requests in batch
+- **💾 Saved Response Examples** - Save API responses as reusable examples under requests (Postman-style)
+- **📊 Collection Runner** - Execute multiple requests in batch with script execution and test results
 - **🔍 GraphQL Support** - Built-in GraphQL query support
 
 ## 🚀 Quick Start
@@ -247,11 +248,33 @@ Execute multiple requests in sequence with the built-in collection runner.
 
 - Right-click on any folder or collection and select "Run All"
 - Automatically executes all requests and test cases
+- Executes pre-request and post-response scripts at collection, folder, and request levels
 - View comprehensive results and test outcomes
 
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-runtests.png?raw=true" alt="Collection Runner"/>
 </div>
+
+## 💾 Saved Response Examples
+
+Save API responses as reusable examples directly under requests — similar to Postman's Examples feature.
+
+### How It Works
+
+1. Send a request and receive a response
+2. Click the **"Save Response"** button in the response panel toolbar
+3. The response is saved as a child node under the request in the collection tree
+4. The saved example shows its HTTP status badge (e.g., `200`, `404`) in the sidebar
+
+### Features
+
+- **Full snapshot** — Both request and response data are persisted (URL, method, headers, body, status, timing)
+- **Open in tab** — Click an example to open it in its own panel with the full request and response data
+- **Drag-and-drop** — Examples can be reordered within their parent request
+- **Duplicate** — When duplicating a request, its examples are also duplicated
+- **Delete cascade** — Deleting a request also removes all its saved examples
+- **Rename** — Right-click an example to rename it; open tabs update automatically
+- **Workspace mode** — Examples are exported as part of `responses.json` for git-friendly storage
 
 ## 🧪 Scriptless Testing
 
@@ -323,6 +346,8 @@ flashpost-tests/
   history.json            ← Request history (commit to git)
   variables.json          ← Environment variables (commit to git)
   cookies.json            ← Cookie storage (commit to git)
+  cookies_v2.json         ← Cookie jar (individual cookies with attributes)
+  responses.json          ← Saved response examples (commit to git)
   user_preferences.json   ← User preferences (commit to git)
 ```
 
