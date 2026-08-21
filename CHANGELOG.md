@@ -2,12 +2,26 @@
 
 All notable changes to Flashpost are documented in this file.
 
+## [2.0.15] - 2026-08-21
+
+### Features
+- **Split Editor Right** — `Cmd+\` or the "Split Editor Right" button now works on Flashpost webview panels, moving the active request to a side-by-side editor group
+- **Response Timing Breakdown** — Hover over response time to see DNS Lookup, TCP Handshake, SSL Handshake, and Transfer timing with colored proportional bars
+- **Response Size Breakdown** — Hover over response size to see request/response split into headers and body (with directional arrows)
+- **Variables in Request** — New panel in the response area showing all variables used in the current request
+- **History Panel improvements** — Updated UI and flow for the History panel
+- **Environment Panel improvements** — Updated UI and logic for the Environment/Variables panel
+- **Response Panel UI refresh** — Updated icons and toolbar layout for code snippet, save, and menu actions
+
+---
+
 ## [2.0.14] - 2026-08-20
 
 ### Features
 - **Saved Response Examples** — Save API responses as child nodes under requests in the collection tree (Postman-style examples)
-- Added copy/paste functionality for saved responses
+- **Copy & Paste** — Cmd+C/Ctrl+C and Cmd+V/Ctrl+V keyboard shortcuts for collection tree items; also available in right-click context menu for collections, folders, requests, and examples
 - Added Postman collection import support for saved response examples
+- Response timing data is now persisted when saving response examples
 
 ### Bug Fixes
 - Fixed focus-related issues in the UI

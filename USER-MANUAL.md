@@ -30,10 +30,12 @@
 22. [Import & Export](#import--export)
 23. [cURL Integration](#curl-integration)
 24. [History](#history)
-25. [Extension Settings](#extension-settings)
-26. [Workspace Storage](#workspace-storage)
-27. [Keyboard Shortcuts](#keyboard-shortcuts)
-28. [Troubleshooting](#troubleshooting)
+25. [Copy & Paste](#copy--paste)
+26. [Split Editor](#split-editor)
+27. [Extension Settings](#extension-settings)
+28. [Workspace Storage](#workspace-storage)
+29. [Keyboard Shortcuts](#keyboard-shortcuts)
+30. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -98,12 +100,33 @@ The main workspace where you configure and send requests:
 Displays the API response:
 
 - **Status** - HTTP status code
-- **Time** - Response time in milliseconds
-- **Size** - Response payload size
+- **Time** - Response time in milliseconds (hover for detailed timing breakdown: DNS, TCP, SSL, Transfer)
+- **Size** - Response payload size (hover for request/response size breakdown with headers and body)
+- **Save Response** - Icon button to save the response as an example
 - **Response tab** - Response body (JSON, XML, HTML, text, or raw)
 - **Headers tab** - Response headers
 - **Cookies tab** - Response cookies
 - **Test Results tab** - Test execution results
+
+#### Response Timing Breakdown
+
+Hover over the **Time** value to see a detailed timing breakdown:
+
+| Phase | Description |
+|-------|-------------|
+| DNS Lookup | Time to resolve the domain name to an IP address |
+| TCP Handshake | Time to establish a TCP connection |
+| SSL Handshake | Time to complete TLS/SSL negotiation (HTTPS only) |
+| Transfer | Server processing + response download time |
+
+Each phase displays a proportional colored bar. Reused connections show "Cache" for DNS/TCP/SSL.
+
+#### Response Size Breakdown
+
+Hover over the **Size** value to see request and response size details:
+
+- **↓ Response Size** — Total, Headers, Body
+- **↑ Request Size** — Total, Headers, Body
 
 ---
 
@@ -812,6 +835,50 @@ Control how many history items to keep (25, 50, 75, 100, or All) via extension s
 
 ---
 
+## Copy & Paste
+
+Copy and paste items in the collection tree using keyboard shortcuts or the right-click context menu.
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+C` / `Cmd+C` | Copy the focused collection, folder, or request |
+| `Ctrl+V` / `Cmd+V` | Paste the copied item at the focused location |
+
+### Context Menu
+
+Right-click any collection, folder, request, or example to see **Copy** and **Paste** options.
+
+### Paste Behavior
+
+| Target | Result |
+|--------|--------|
+| Collection or Folder | Pastes inside as a child |
+| Request or Example | Pastes as a sibling (same parent) |
+| Collection (when pasting a collection) | Always pastes at root level |
+
+### Rules
+
+- Pasting creates a full deep copy (including child folders, requests, and saved examples)
+- The pasted item gets " (Copy)" appended to its name
+- Folders cannot be pasted into themselves or their own descendants
+- Examples can only be copied and pasted within their parent request
+
+---
+
+## Split Editor
+
+View two requests side by side by splitting the editor:
+
+1. Open two or more requests from the sidebar
+2. Press `Cmd+\` (macOS) or `Ctrl+\` (Windows/Linux), or click the **"Split Editor Right"** button in the editor title bar
+3. The active request moves to a new editor group on the right
+
+This lets you compare requests, copy values between them, or reference one while editing another.
+
+---
+
 ## Extension Settings
 
 Access settings via the gear icon in the sidebar or through VS Code Settings.
@@ -866,6 +933,7 @@ Team members who open the project automatically load the shared API data.
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl+Shift+E` / `Cmd+Shift+E` | Change active environment |
+| `Ctrl+\` / `Cmd+\` | Split editor right (move active request to side-by-side group) |
 | `Ctrl+S` / `Cmd+S` | Save current request/settings |
 | `Ctrl+C` / `Cmd+C` | Copy selected sidebar item |
 | `Ctrl+V` / `Cmd+V` | Paste copied item |

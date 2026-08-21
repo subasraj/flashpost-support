@@ -21,6 +21,10 @@ Flashpost is a lightweight REST API client extension that enables you to develop
 - **📋 Code Generation** - Generate code snippets in multiple languages
 - **🍪 Cookie Management** - Postman-compatible cookie jar with automatic capture, domain/path matching, and scripting API
 - **💾 Saved Response Examples** - Save API responses as reusable examples under requests (Postman-style)
+- **⏱️ Response Timing** - Detailed request timing breakdown (DNS, TCP, SSL, Transfer) on hover
+- **📊 Size Breakdown** - Request and response size details with headers/body split on hover
+- **✂️ Copy & Paste** - Keyboard shortcuts (Cmd+C/V) and context menu for collection tree items
+- **↔️ Split Editor** - View two requests side by side using Split Editor Right (Cmd+\)
 - **📊 Collection Runner** - Execute multiple requests in batch with script execution and test results
 - **🔍 GraphQL Support** - Built-in GraphQL query support
 
@@ -275,6 +279,44 @@ Save API responses as reusable examples directly under requests — similar to P
 - **Delete cascade** — Deleting a request also removes all its saved examples
 - **Rename** — Right-click an example to rename it; open tabs update automatically
 - **Workspace mode** — Examples are exported as part of `responses.json` for git-friendly storage
+
+## ⏱️ Response Timing Breakdown
+
+Hover over the **Time** value in the response status bar to see a detailed breakdown of the request timing phases.
+
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-timing-breakdown.png?raw=true" alt="Response Timing Breakdown"/>
+</div>
+
+The tooltip shows:
+- **DNS Lookup** — Time to resolve the domain name
+- **TCP Handshake** — Time to establish a TCP connection
+- **SSL Handshake** — Time to complete TLS negotiation (HTTPS only)
+- **Transfer** — Server processing time + response download
+
+Each phase includes a proportional colored bar for quick visual reference. Phases that use a cached/reused connection show "Cache".
+
+## 📊 Response Size Breakdown
+
+Hover over the **Size** value in the response status bar to see a complete breakdown of request and response sizes.
+
+<div align="center">
+  <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-size-breakdown.png?raw=true" alt="Response Size Breakdown"/>
+</div>
+
+The tooltip shows:
+- **↓ Response Size** — Total response size with headers and body breakdown
+- **↑ Request Size** — Total request size with headers and body breakdown
+
+## ✂️ Copy & Paste (Collections)
+
+Copy and paste items in the collection tree using keyboard shortcuts or the right-click context menu.
+
+- **Cmd+C / Ctrl+C** — Copy the selected collection, folder, or request
+- **Cmd+V / Ctrl+V** — Paste into the focused folder/collection (or as sibling if focused on a request)
+- Context menu: **Copy** and **Paste** options available on collections, folders, requests, and examples
+- Pasting a folder/collection creates a deep copy including all children and examples
+- Examples can only be pasted within their parent request
 
 ## 🧪 Scriptless Testing
 
