@@ -2,6 +2,32 @@
 
 All notable changes to Flashpost are documented in this file.
 
+## [2.0.16] - 2026-08-22
+
+### Features
+- **Delete All Collections** — New menu option to permanently delete all collections, folders, requests, and saved examples with double-confirmation warning dialog
+- **Version in logs** — Activation logs now display the extension version (`Flashpost v2.0.16 extension activation...`)
+
+### Improvements
+- **Collection ordering** — "Save to Collection" dropdown now respects drag-and-drop order (`relative_index`)
+- **Immediate reorder sync** — Drag-and-drop changes in the sidebar immediately refresh the "Save to Collection" panel if open
+- **Import active variable** — When importing "All Collections" with variables, the imported active variable flag is preserved and existing active flags are cleared
+- **Timeout error messages** — Error messages now show actual elapsed time instead of the configured timeout limit
+
+### UI Improvements
+- Updated Run All Collections UI
+- Fixed Collection settings environment refresh issue
+- Cleaned up "Save to Collection" UI
+- Updated Environments UI and flow
+- Modified collection settings UI
+- Unified import to use single import flow for all collection types
+- "Delete All Collections" menu item shown in red, hidden when no collections exist
+
+### Bug Fixes
+- Fixed tab switching state management
+
+---
+
 ## [2.0.15] - 2026-08-21
 
 ### Features

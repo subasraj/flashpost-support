@@ -788,6 +788,16 @@ Flashpost supports importing from:
 - **All Collections/Variables** - Hamburger menu → "Export All Collections/Variables"
 - Exports include all requests, folders, hierarchy, and environment variables
 
+### Deleting All Collections
+
+To remove all collections, folders, requests, and saved examples at once:
+
+1. Click the hamburger menu in the Collections tab
+2. Select **"Delete All Collections"** (shown in red, only visible when collections exist)
+3. Confirm the first warning: *"This will permanently delete ALL collections..."*
+4. Confirm the second warning: *"Are you sure?"*
+5. All data is permanently removed
+
 ---
 
 ## cURL Integration
