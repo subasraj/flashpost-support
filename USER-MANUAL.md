@@ -66,7 +66,7 @@ Flashpost stores all data locally using SQLite (via WebAssembly), ensuring your 
 ## Getting Started
 
 1. Click the **Flashpost icon** in the Activity Bar to open the sidebar
-2. Click **"New Request"** at the top of the sidebar
+2. Click **"New Request"** at the top of the sidebar and choose **HTTP** or **GraphQL**
 3. Enter a URL in the address bar (e.g., `https://jsonplaceholder.typicode.com/posts/1`)
 4. Select the HTTP method (GET, POST, PUT, DELETE, etc.)
 5. Click **Send**
@@ -716,12 +716,10 @@ If you manually add a `Cookie` header on a request, your values take precedence 
 ## GraphQL Support
 
 ### Sending GraphQL Requests
-
-1. Create a new request with method **POST**
+1. Click **New Request** → **GraphQL** (or create an HTTP request and switch to Body → GraphQL)
 2. Set the URL to your GraphQL endpoint
-3. Click the **Body** tab
-4. Select **GraphQL**
-5. Write your query:
+3. The Body tab with GraphQL sub-tab is already selected
+4. Write your query:
    ```graphql
    query {
      users {
@@ -774,6 +772,9 @@ Flashpost supports importing from:
 - **Postman** - Collection v2.1 and Environment JSON files
 - **Thunder Client** - Collection and Environment exports
 - **OpenAPI/Swagger** - API specification files
+  - Endpoint descriptions are imported into the Notes field
+  - Parameter descriptions and default values are preserved
+  - Request body property descriptions are included
 - **cURL** - Individual cURL commands
 
 **To import:**
@@ -860,6 +861,14 @@ Copy and paste items in the collection tree using keyboard shortcuts or the righ
 
 Right-click any collection, folder, request, or example to see **Copy** and **Paste** options.
 
+Right-click a collection or folder to access **Sort** options:
+
+| Sort Option | Description |
+|-------------|-------------|
+| Folders First, Default | Moves folders to the top, preserves existing order within each group |
+| Folders First, A to Z | Alphabetical sort with folders first, then requests A-Z |
+| Folders First, Z to A | Reverse alphabetical sort with folders first, then requests Z-A |
+
 ### Paste Behavior
 
 | Target | Result |
@@ -895,7 +904,7 @@ Access settings via the gear icon in the sidebar or through VS Code Settings.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| Layout | Vertical Split | Request/response layout orientation |
+| Layout | Vertical Split | Request/response layout orientation (auto-switches based on panel width) |
 | Horizontal Layout | Accordion Style | Style when using horizontal split |
 | Custom Data Location | `$HOME/Documents/` | Folder path for storing data |
 | Save Data To Workspace | false | Store data in workspace folder |
@@ -903,6 +912,8 @@ Access settings via the gear icon in the sidebar or through VS Code Settings.
 | Use Env File From Workspace | true | Read `.env` file from workspace |
 | Default Protocol | http | Protocol added when URL has none |
 | Timeout | 30 sec | Request timeout duration |
+
+> **Note:** When a connection fails (server not running, connection refused), Flashpost automatically retries every 2 seconds until the configured timeout is reached. The Cancel button stops retries immediately.
 | History Limit | 25 | Number of history items to display |
 | Default Sidebar Tab | Collections | Tab shown when sidebar opens |
 | SSL Check | true | Enable strict SSL verification |
@@ -943,6 +954,7 @@ Team members who open the project automatically load the shared API data.
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl+Shift+E` / `Cmd+Shift+E` | Change active environment |
+| `Ctrl+Shift+L` / `Cmd+Shift+L` | Show Flashpost logs |
 | `Ctrl+\` / `Cmd+\` | Split editor right (move active request to side-by-side group) |
 | `Ctrl+S` / `Cmd+S` | Save current request/settings |
 | `Ctrl+C` / `Cmd+C` | Copy selected sidebar item |
@@ -952,6 +964,14 @@ Team members who open the project automatically load the shared API data.
 | `Arrow Up` / `Arrow Down` | Navigate sidebar tree items |
 | `Arrow Right` | Expand collection/folder, or move to first child |
 | `Arrow Left` | Collapse collection/folder, or move to parent |
+
+### Tab Context Menu
+
+Right-click any open request or environment tab to access additional actions:
+
+| Action | Description |
+|--------|-------------|
+| **Rename** | Rename the request or environment directly from the tab. Works for collection requests, history requests, and environment variables. |
 
 ---
 

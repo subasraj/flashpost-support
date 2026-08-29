@@ -2,6 +2,71 @@
 
 All notable changes to Flashpost are documented in this file.
 
+## [2.0.21] - 2026-08-26
+### Features
+- **OpenAPI Required/Optional Parameter Validation (Issue #76)** — Parameters imported from OpenAPI specs now carry `required` and `description` metadata. Required params show a red dot indicator (●) and description tooltip (ⓘ) in Query Params, Headers, and Path Variables tables. Clicking Send with missing required values shows a categorized modal popup (e.g., "Query Params: include", "Path Variables: userId", "Body: name").
+- **Required Body Parameter Validation** — Body parameters marked as `required` in OpenAPI schemas are validated before sending. Removing a required key from the JSON body or clearing the body entirely triggers a warning popup.
+- **Duplicate Path Variable Detection** — If the same path variable name appears twice in the URL (e.g., `:userId/:userId`), a warning popup appears on Send.
+- **Persistent Parameter Metadata** — Path param and query param descriptions/required flags are stored in separate DB columns (`path_param_meta`, `query_param_meta`) so they survive removal and re-addition of params in the URL.
+- **Script Import Confirmation** — Importing collections containing scripts (pre-request/test) now shows a modal warning: "Import with Scripts", "Import without Scripts", or Cancel. Protects against untrusted collection scripts.
+
+### Improvements
+- **Categorized Validation Messages** — The required-param popup now groups missing values by category (Query Params, Headers, Path Variables, Body) instead of a flat list.
+- **Tooltip Theme Compatibility** — All react-tooltip instances now use VS Code CSS variables (`--vscode-editorWidget-background`, `--vscode-editorWidget-foreground`, `--vscode-editorWidget-border`) for full light/dark/high-contrast theme support.
+- **Tooltip Opacity & Placement** — Collection sidebar description tooltips are now fully opaque (no bleed-through) and positioned above items.
+
+### Bug Fixes
+- **Path param metadata lost on URL edit** — Fixed the reducer's `updatePathParams` and `updateQueryParams` losing `description`/`required` fields when URL was edited (rebuilt params from URL without preserving metadata).
+- **Duplicate path params renaming all entries** — Fixed `updatePathParams` matching the same param entry multiple times when duplicate names existed. Now tracks consumed indices.
+- **Non-required params triggering validation** — Fixed validation popup firing for path params without values even when they weren't marked as required.
+
+## [2.0.20] - 2026-08-25
+
+### Features
+- **New Request Dropdown** — "New Request" button now shows a dropdown menu with **HTTP** and **GraphQL** options. Selecting GraphQL opens the request with the Body tab active and the GraphQL sub-tab pre-selected.
+- **Responsive Layout** — The request/response panel layout now auto-switches between Vertical Split and Horizontal Split based on window width (≤900px switches to horizontal, wider restores vertical).
+
+### Bug Fixes
+- **Dynamic variables without environment** — Fixed `{{$randomXxx}}` faker variables not resolving when no environment variables were configured or the variable data was empty.
+- **JSON body control characters** — Fixed "Bad control character in string literal" error when faker values containing newlines or tabs (e.g., `{{$randomLoremLines}}`, `{{$randomPhrase}}`) were used in JSON request bodies.
+- **Delete key on hidden panel** — Fixed Delete/Backspace key firing on collection items even when the Collections tab was not visible (e.g., when History or Environment tab was active). Now checks parent panel visibility before processing the keystroke.
+- **Multiple new request tabs** — Fixed clicking "New Request" multiple times opening only one tab. Each new request now gets a unique panel identifier using a timestamp suffix.
+- **Panel reopen from History** — Fixed requests not reopening from the History tab after being saved and closed. The dispose handler now correctly unregisters both the initial and final panel IDs.
+- **Sort context menu position** — Moved Sort submenu after Delete in the context menu. Sort options now expand inline below the trigger to avoid being clipped by panel edges.
+- **Sort click toggling tree** — Fixed clicking "Sort ▸" in the context menu unintentionally expanding/collapsing the collection or folder tree node.
+
+### Improvements
+- **Smaller extension bundle** — Reduced extension.js from 13MB to 8MB by importing only the English locale from Faker.js instead of all locales.
+
+## [2.0.18] - 2026-08-24
+
+### Features
+- **Sort Collections & Folders** — Right-click context menu with "Sort ▸" sub-menu offering: Folders First Default, Folders First A to Z, Folders First Z to A.
+- **OpenAPI Description Import** — Endpoint descriptions, parameter descriptions, and default values are now imported into the Notes field when importing OpenAPI/Swagger specs. Body property descriptions from the schema are also included.
+- **Connection Retry** — Failed connections (ECONNREFUSED, ETIMEDOUT, ECONNRESET, ECONNABORTED) now automatically retry every 2 seconds until the configured timeout is reached. Cancel button stops retries immediately.
+
+### Improvements
+- **Collection tree spacing** — Added padding above the first collection item for easier drag-and-drop to top position.
+
+### Bug Fixes
+- **Timeout error calculation** — Fixed timeout comparison that was multiplying milliseconds by 1000 again, causing incorrect "unable to connect" vs "timed out" detection.
+
+## [2.0.17] - 2026-08-23
+
+### Features
+- **Rename from Tab** — Right-click any open request or environment tab to rename it directly. Works for collection requests, history requests, and environment variables.
+- **Logs Keyboard Shortcut** — `Ctrl+Shift+L` / `Cmd+Shift+L` to quickly open Flashpost logs panel.
+- **New Icon** — Redesigned Flashpost icon with a modern diagonal lightning bolt, speed lines, and API endpoint dots on a transparent background.
+
+### Bug Fixes
+- **URL-Encoded checkbox toggle** — Fixed `onSelectChange` in URL-Encoded body writing to `body.formdata` instead of `body.urlencoded`, causing silent data corruption when toggling checkboxes.
+- **Auth conditional comparison** — Fixed `setAuthValue` using assignment (`=`) instead of comparison (`===`) for `auth.addTo`, which prevented the `removeHeaders()` branch from ever executing when switching away from inherited API Key auth.
+
+### Improvements
+- **New collection ordering** — When a new collection is created, it now appears at the top of the sidebar list.
+- **Extension loading** — Improved activation guard to prevent double-initialization.
+- **Error logging** — Cleaned up build-time warning messages and improved error log output.
+
 ## [2.0.16] - 2026-08-22
 
 ### Features

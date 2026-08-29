@@ -12,7 +12,7 @@ Flashpost is a lightweight REST API client extension that enables you to develop
 - **🚀 Lightweight & Fast** - Minimal overhead REST API client built specifically for VS Code
 - **🎯 Simple Interface** - Clean, intuitive UI that gets out of your way
 - **📁 Collections & Environments** - Organize your requests and manage multiple environments
-- **📥 Import Support** - Seamlessly migrate from Postman and Thunder Client
+- **📥 Import Support** - Seamlessly migrate from Postman, Thunder Client, and OpenAPI/Swagger (with descriptions)
 - **🔄 cURL Integration** - Import and execute cURL commands directly
 - **🧪 Scriptless Testing** - GUI-based testing without writing test scripts
 - **💾 Local Storage** - All data stored locally in SQLite with customizable storage location
@@ -26,13 +26,13 @@ Flashpost is a lightweight REST API client extension that enables you to develop
 - **✂️ Copy & Paste** - Keyboard shortcuts (Cmd+C/V) and context menu for collection tree items
 - **↔️ Split Editor** - View two requests side by side using Split Editor Right (Cmd+\)
 - **📊 Collection Runner** - Execute multiple requests in batch with script execution and test results
-- **🔍 GraphQL Support** - Built-in GraphQL query support
+- **🔍 GraphQL Support** - Built-in GraphQL query support with dedicated New Request → GraphQL option
 
 ## 🚀 Quick Start
 
 1. **Install the Extension** - Search for "Flashpost" in the VS Code Extensions marketplace
 2. **Open Flashpost** - Click the Flashpost icon in the Activity Bar
-3. **Create Your First Request** - Click "New Request" in the Quick Access sidebar
+3. **Create Your First Request** - Click "New Request" and choose **HTTP** or **GraphQL**
 4. **Test Your API** - Enter your endpoint, configure headers, and hit send!
 
 📖 **[Full User Manual](https://github.com/subasraj/flashpost-support/blob/main/USER-MANUAL.md)** - Comprehensive guide covering all features in detail.
@@ -245,6 +245,27 @@ Switch the active environment without leaving the editor:
 - **Keyboard shortcut:** `Ctrl+Shift+E` (Windows/Linux) / `Cmd+Shift+E` (macOS)
 - Shows all environments with the current active one marked ⭐
 - Updates the sidebar, open request panels, and variable highlighting immediately
+
+### Quick Logs Access
+
+View extension logs for debugging:
+
+- **Keyboard shortcut:** `Ctrl+Shift+L` (Windows/Linux) / `Cmd+Shift+L` (macOS)
+
+### Rename from Tab
+
+Right-click any open request or environment tab to rename it directly:
+
+- Works for collection requests, history requests, and environment variables
+- Updates the sidebar tree, database, and tab title in one action
+
+### Sort Collections & Folders
+
+Right-click a collection or folder to sort its contents:
+
+- **Folders First, Default** — Folders on top, original order preserved
+- **Folders First, A to Z** — Alphabetical sort
+- **Folders First, Z to A** — Reverse alphabetical sort
 
 ## 🏃‍♂️ Collection Runner
 
