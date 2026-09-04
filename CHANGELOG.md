@@ -2,6 +2,11 @@
 
 All notable changes to Flashpost are documented in this file.
 
+## [2.0.22] - 2026-08-29
+### Improvements
+- **Uniform Run Collection buttons** — The Run, Reload, Cancel, and Export buttons in the Collection Runner now share a consistent width instead of sizing to their label text.
+- **Documentation** — Reformatted README.md with a table of contents, feature summary table, and cleaner structure.
+
 ## [2.0.21] - 2026-08-26
 ### Features
 - **OpenAPI Required/Optional Parameter Validation (Issue #76)** — Parameters imported from OpenAPI specs now carry `required` and `description` metadata. Required params show a red dot indicator (●) and description tooltip (ⓘ) in Query Params, Headers, and Path Variables tables. Clicking Send with missing required values shows a categorized modal popup (e.g., "Query Params: include", "Path Variables: userId", "Body: name").
