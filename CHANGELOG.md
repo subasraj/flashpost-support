@@ -2,6 +2,17 @@
 
 All notable changes to Flashpost are documented in this file.
 
+## [2.0.23] - 2026-08-29
+### Bug Fixes
+- **Horizontal split not resizable** — Fixed the draggable divider in the "Split Style" horizontal layout not responding to drag. The split now remounts cleanly with the correct direction and the stacked panels honor their assigned heights.
+- **Responsive layout overrode your style** — When the panel narrows and auto-switches to Horizontal Split, it now preserves your configured Horizontal Layout (Split Style / Accordion Style) instead of forcing Accordion Style.
+- **Saved example jumped to History tab** — Opening a freshly saved response example no longer flips the sidebar to the History tab; the parent request id is now passed as the collection context, so the example stays highlighted under Collections (matching how it opens from the sidebar).
+- **Saved example response not formatted** — Saved examples now render their response using the format derived from the stored Content-Type (as live responses do), instead of always assuming JSON. XML, HTML, and other formatted responses are pretty-printed again instead of showing as a single raw line.
+- **Sample not revealed in collapsed tree** — Clicking a saved example (from its tab or the sidebar) now expands the collection tree down to it — through the parent request and any containing folders/collection — instead of leaving the tree collapsed. Also applies when re-activating any collection request's tab.
+
+### Improvements
+- **Wider split divider** — The request/response split divider is now a consistent, easier-to-grab 6px and highlights on hover without resizing.
+
 ## [2.0.22] - 2026-08-29
 ### Improvements
 - **Uniform Run Collection buttons** — The Run, Reload, Cancel, and Export buttons in the Collection Runner now share a consistent width instead of sizing to their label text.

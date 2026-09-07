@@ -310,7 +310,7 @@ Persist API responses as reusable examples under requests, similar to Postman's 
 3. The response is saved as a child node under the request, showing its HTTP status badge in the sidebar.
 
 - **Full snapshot** — request and response data (URL, method, headers, body, status, timing) are persisted.
-- **Open in tab** — click an example to open it in its own panel.
+- **Open in tab** — click an example to open it in its own panel; the response is formatted by its content type (JSON, XML, HTML, etc.). The collection tree expands to reveal the example even when collapsed.
 - **Drag-and-drop** — reorder examples within their parent request.
 - **Duplicate** — duplicating a request also duplicates its examples.
 - **Delete cascade** — deleting a request removes all its examples.
@@ -454,6 +454,8 @@ flashpost-tests/
 2. Use Flashpost's import feature and select the Thunder Client format.
 3. Import collections and environments.
 
+> Newly imported collections appear at the top of the collection tree.
+
 ---
 
 ## Configuration
@@ -462,6 +464,8 @@ Access settings via the gear icon in the top-right corner of the sidebar.
 
 | Setting | Description |
 |---------|-------------|
+| **Layout** | Request/response orientation. Auto-switches to horizontal when the panel is narrow and back to vertical when wide, keeping your Horizontal Layout style |
+| **Horizontal Layout** | Style when stacked horizontally — **Split Style** (draggable divider) or **Accordion Style** (collapsible sections) |
 | **Custom Data Location** | Where collections and data are stored |
 | **Save to Workspace** | Store request data in the workspace as git-friendly JSON |
 | **Workspace Relative Path** | Custom relative path for workspace data |

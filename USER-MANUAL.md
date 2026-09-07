@@ -611,6 +611,8 @@ Save API responses as reusable examples directly under requests in the collectio
 - Saved examples appear as child nodes under their parent request in the sidebar
 - Each example shows an HTTP status badge (e.g., `200`, `404`)
 - Click an example to open it in its own tab with the full request and response data
+- The saved response is displayed formatted by its content type (JSON, XML, HTML, etc.), just as it appeared when the request was originally sent
+- Opening an example (or switching to its tab) expands the collection tree to reveal it, even if the tree was collapsed
 
 ### Managing Examples
 
@@ -783,6 +785,8 @@ Flashpost supports importing from:
 3. Choose your file(s)
 4. Collections and environments are imported with their full structure
 
+A newly imported collection is placed at the **top** of the collection tree so it's easy to find right after importing.
+
 ### Exporting
 
 - **Single Collection** - Right-click a collection → Export
@@ -904,8 +908,8 @@ Access settings via the gear icon in the sidebar or through VS Code Settings.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| Layout | Vertical Split | Request/response layout orientation (auto-switches based on panel width) |
-| Horizontal Layout | Accordion Style | Style when using horizontal split |
+| Layout | Vertical Split | Request/response layout orientation. Auto-switches to Horizontal Split when the panel is narrow (≤900px) and back to Vertical when wide, preserving your chosen Horizontal Layout style |
+| Horizontal Layout | Accordion Style | Style when stacked horizontally. **Split Style** shows a draggable divider you can drag to resize the Request/Response panels; **Accordion Style** shows collapsible sections you expand/collapse |
 | Custom Data Location | `$HOME/Documents/` | Folder path for storing data |
 | Save Data To Workspace | false | Store data in workspace folder |
 | Workspace Data Relative Path | (empty) | Custom path within workspace |
