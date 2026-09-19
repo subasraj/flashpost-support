@@ -26,7 +26,7 @@ An environment can be attached to a collection via **Collection Settings → Env
 - When attached, all requests in the collection use that environment's variables instead of the active (starred) environment
 - Scripts (`fp.setEnvVar`, `postman.setEnvironmentVariable`) persist changes to the attached environment
 - Global variables (`fp.setGlobalEnvVar`) are always saved to the Global environment regardless of the attached environment
-- Variable highlighting (`{{variable}}` green/red) in request panels reflects the attached environment in real-time
+- Variable highlighting (`{{variable}}` green/red) in request panels reflects the attached environment in real-time. Tokens also resolve green from Global and from the request's own **Set Variables** entries, and re-highlight live when a script (e.g. `fp.setEnvVar`) or another open request panel persists a value — so a `{{token}}` turns green as soon as its value becomes available, without reopening the request
 
 ## Global Objects
 
@@ -66,7 +66,7 @@ tc.response.getStatus() // same as res.getStatus()
 
 ### Environment Variables
 
-Variables from the currently selected environment. Changes are persisted to the database.
+Variables from the currently selected environment. Changes are persisted to the database, and any open Environment panels reload to reflect them (including changes made during a **Run All**).
 
 | Method | Returns | Description |
 |--------|---------|-------------|
@@ -776,6 +776,7 @@ fp.cookies.clearAll();
 - **No async** — `Promise`, `setTimeout`, `setInterval` are blocked
 - Script modifications to `req` (URL, headers, body, method) only affect the **current execution** — they are NOT saved to the database
 - Variable changes via `fp.setEnvVar()` / `fp.setGlobalEnvVar()` ARE persisted to the database
+- When a script persists a variable (including during **Run All**), any Environment panels you already have open reload automatically to show the new value
 
 ---
 

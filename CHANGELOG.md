@@ -2,6 +2,42 @@
 
 All notable changes to Flashpost are documented in this file.
 
+## [2.0.26] - 2026-09-18
+### Features
+- **Expand All / Collapse All on collection tree nodes** — The collection/folder right-click menu now has a single toggle that reads **Expand All** when the node is collapsed and **Collapse All** when expanded. It acts only on the node you right-clicked and its descendants, not the whole tree.
+- **Clear (×) button in the sidebar filter** — The filter box on the History, Collections, and Environment tabs now shows a small × while it contains text; clicking it clears the filter in one action.
+
+### Improvements
+- **Run button disabled while a Run All is in progress** — The **Run** button in the collection runner is disabled once a run starts and re-enabled when it finishes (or is cancelled), so a run can't be triggered twice.
+- **Open VSX downloads badge** — Added an Open VSX download-count badge to the README.
+
+### Bug Fixes
+- **Set Variables during Run All not reflected in open Environment panels** — When a script (including during a Run All) or an add/duplicate/update/import changed a variable, any already-open Environment panels now reload to show the persisted values instead of showing stale data.
+
+## [2.0.25] - 2026-09-14
+### Bug Fixes
+- **"SSL Check: false" not honored for self-signed certificates (#98)** — Disabling **SSL Check** now actually skips certificate verification on every request path. Requests to endpoints with self-signed, untrusted-root, expired, or hostname-mismatched certificates connect instead of failing with TLS errors. The setting is now applied both on the request agent and directly on the request options, so it holds through redirects and proxied requests, and it also applies to OAuth 2.0 token fetches.
+- **Response Time breakdown showing wrong or blank values** — Fixed the DNS / TCP / SSL / Transfer phase timings intermittently coming back empty or incorrect. Timing is now computed inline after the request resolves instead of via leaked global axios interceptors, and the socket timing listeners are attached so they no longer miss fast connections.
+- **Build-time "Can't resolve 'crypto'" warning** — Moved the CSP nonce generator into its own module so Node's `crypto` is no longer pulled into the webview bundle. The webview build no longer emits the warning.
+
+## [2.0.24] - 2026-09-12
+### Features
+- **cURL command editor** — The Import/Run Curl panel now edits the command in a Monaco editor with shell syntax highlighting. In Run mode the command and response are separated by a draggable divider you can resize, and a Cancel button aborts an in-flight cURL run.
+- **Force IPv4/IPv6 on imported cURL** — `-4` / `--ipv4` and `-6` / `--ipv6` now pin the connection to the requested IP family. A direct-query DNS lookup is used to match `curl -4` resolution speed on internal hosts (avoiding the slow dual-stack `getaddrinfo` path).
+- **Filter variables on the Environment page** — Added a filter box to find variables by name or value (case-insensitive). Filtering only affects the view; add, edit, delete, and Save still apply to the full variable set.
+
+### Improvements
+- **Live variable highlighting** — `{{...}}` tokens in the URL bar and the Monaco body editor now render green when resolvable and red when unresolved. Tokens resolve from the selected environment, Global, or the request's own Set Variables, and re-highlight immediately when a script or another open request panel persists a value.
+- **Cross-platform generated cURL** — The Shell/cURL code snippet now uses double quotes, stays on a single line, and compacts JSON/XML bodies so it runs unchanged in Windows cmd.exe/PowerShell as well as bash/zsh.
+- **Import/Run Curl layout** — Left-aligned the command and response panes, moved the Run button onto the "Curl Command" label row, and added spacing around the resize separator.
+
+### Bug Fixes
+- **Windows cURL body imported as an escaped string** — Fixed importing a double-quoted, backslash-escaped body (e.g. `--data "{\"userId\":\"CONN\"}"`) so the escaping is removed and the body is a real JSON/XML object. Previously the server received a JSON string and rejected it (e.g. Jackson "no String-argument constructor").
+- **Monaco editor losing syntax colors** — Fixed editors intermittently rendering without syntax highlighting ("turning white"). Editors now dispose the instance they created on unmount and re-apply the theme only when the VS Code theme kind actually changes, instead of leaking editors and thrashing the global theme.
+- **Code generator dropped non-standard query strings** — Fixed generated snippets normalizing URLs like `?&AAI&B&&&` (bare keys and empty segments). The raw query is now preserved verbatim.
+- **Environment variables disappearing / showing red** — Fixed `UpdateVariable2` overwriting an environment's stored variables from a partial/stale caller snapshot. Incoming keys are now merged into the existing row, so other keys are never dropped and inherited Global/.env entries are not persisted into the environment.
+- **Cancel button unavailable for cURL runs** — The Cancel Request button now appears while a cURL run is in progress.
+
 ## [2.0.23] - 2026-08-29
 ### Bug Fixes
 - **Horizontal split not resizable** — Fixed the draggable divider in the "Split Style" horizontal layout not responding to drag. The split now remounts cleanly with the correct direction and the stacked panels honor their assigned heights.

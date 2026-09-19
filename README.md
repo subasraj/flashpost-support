@@ -4,6 +4,7 @@
 [![Installs](https://vsmarketplacebadges.dev/installs/VASubasRaj.flashpost.svg)](https://marketplace.visualstudio.com/items?itemName=VASubasRaj.flashpost)
 [![Rating](https://vsmarketplacebadges.dev/rating/VASubasRaj.flashpost.svg)](https://marketplace.visualstudio.com/items?itemName=VASubasRaj.flashpost)
 [![Open VSX](https://img.shields.io/open-vsx/v/VASubasRaj/flashpost)](https://open-vsx.org/extension/VASubasRaj/flashpost)
+[![Open VSX Downloads](https://img.shields.io/open-vsx/dt/VASubasRaj/flashpost?label=open%20vsx%20downloads)](https://open-vsx.org/extension/VASubasRaj/flashpost)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Flashpost is a lightweight REST API client for Visual Studio Code. Design, test, and debug APIs without leaving your editor — no context switching to external tools, no bloat.
@@ -19,6 +20,7 @@ Flashpost is a lightweight REST API client for Visual Studio Code. Design, test,
 - [Highlights](#highlights)
 - [Getting Started](#getting-started)
 - [Collections & Organization](#collections--organization)
+- [Import & Run cURL](#import--run-curl)
 - [Scripting](#scripting)
 - [Testing](#testing)
 - [Collection Runner](#collection-runner)
@@ -41,7 +43,7 @@ Flashpost is a lightweight REST API client for Visual Studio Code. Design, test,
 | **Lightweight & Fast** | Minimal-overhead client built specifically for VS Code |
 | **Collections & Environments** | Organize requests hierarchically and manage multiple environments |
 | **Broad Import Support** | Migrate from Postman, Thunder Client, and OpenAPI/Swagger with descriptions and required-field metadata |
-| **cURL Integration** | Import and execute cURL commands directly |
+| **cURL Integration** | Import and execute cURL commands in a syntax-highlighted editor, with a resizable command/response split and a cancellable run — cross-platform (Windows cmd/PowerShell, macOS/Linux) |
 | **Scriptless & Scripted Testing** | GUI-based assertions or Chai-style `fp.test` / `fp.expect` scripts |
 | **Pre/Post Scripts** | JavaScript hooks at collection, folder, and request levels |
 | **Cookie Jar** | Postman-compatible cookie handling with automatic capture and domain/path matching |
@@ -103,9 +105,25 @@ Right-click a collection or folder to sort its contents:
 - **Folders First, A to Z** — Alphabetical.
 - **Folders First, Z to A** — Reverse alphabetical.
 
+### Expand All / Collapse All
+
+Right-click a collection or folder for a single toggle that reads **Expand All** when the node is collapsed and **Collapse All** when expanded. It applies only to the node you right-clicked and its descendants, leaving the rest of the tree untouched.
+
 ### Rename from Tab
 
 Right-click any open request or environment tab to rename it. The sidebar tree, database, and tab title update together.
+
+---
+
+## Import & Run cURL
+
+Paste a cURL command to either import it as a saved request or run it immediately. Open it from the sidebar menu → **Import/Run Curl**.
+
+- **Syntax-highlighted editor** — the command is edited in a Monaco editor with shell highlighting.
+- **Import** — convert the command into a request and save it into a collection/folder.
+- **Run (Without Save)** — execute the command and view the response inline. The editor and response are split by a **draggable separator** you can resize, and a **Cancel** button aborts an in-flight run.
+- **Cross-platform bodies** — commands copied from Windows (double-quoted, backslash-escaped bodies such as `--data "{\"a\":\"b\"}"`) are un-escaped correctly, so the request body is a real JSON/XML object rather than an escaped string.
+- **Force IP family** — `-4` / `--ipv4` and `-6` / `--ipv6` pin the connection to IPv4 or IPv6.
 
 ---
 
@@ -294,6 +312,7 @@ Execute multiple requests in sequence.
 - Runs all requests and test cases in order.
 - Executes pre-request and post-response scripts at collection, folder, and request levels.
 - Reports comprehensive results and test outcomes.
+- The **Run** button is disabled while a run is in progress and re-enabled when it finishes or is cancelled.
 
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-runtests.png?raw=true" alt="Collection runner"/>
@@ -363,6 +382,8 @@ Generate ready-to-use snippets in multiple languages. Click the `</>` icon in th
 | Python | Requests |
 | Shell | cURL |
 
+The generated **cURL** command is cross-platform: it uses double quotes, stays on a single line, and compacts JSON/XML bodies so it runs unchanged in Windows cmd.exe/PowerShell as well as bash/zsh.
+
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-code-snippet.png?raw=true" alt="Code generation"/>
 </div>
@@ -384,6 +405,21 @@ Manage development, staging, and production environments side by side.
 - **Command Palette:** `Flashpost: Change Environment`
 - **Shortcut:** `Ctrl+Shift+E` (Windows/Linux) / `Cmd+Shift+E` (macOS)
 - Displays all environments with the active one marked ⭐, updating the sidebar, panels, and highlighting immediately.
+
+### Filter Variables
+
+On the Environment page, use the filter box to quickly find a variable by **name or value** (case-insensitive). Filtering only affects the view — editing, adding, deleting, and Save all continue to work against the full variable set.
+
+The sidebar filter box (on the **History**, **Collections**, and **Environment** tabs) shows a **×** button while it contains text; click it to clear the filter in one action.
+
+### Variable Highlighting
+
+`{{variable}}` tokens are color-coded in the URL bar and the request body editor:
+
+- **Green** — the variable resolves from a known source: the selected environment, Global, or the request's own **Set Variables**.
+- **Red** — the variable is unresolved (not defined in any of those sources).
+
+Highlighting updates live as variables are saved — including from scripts and from other open request panels — so a token turns green as soon as its value becomes available.
 
 ### Variables from Responses
 
@@ -470,6 +506,7 @@ Access settings via the gear icon in the top-right corner of the sidebar.
 | **Save to Workspace** | Store request data in the workspace as git-friendly JSON |
 | **Workspace Relative Path** | Custom relative path for workspace data |
 | **History Limit** | Number of historical requests to keep |
+| **SSL Check** | Verify server TLS certificates (on by default). Turn it **off** to call endpoints with self-signed, untrusted, expired, or hostname-mismatched certificates |
 
 <div align="center">
   <img src="https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-extension-settings.png?raw=true" alt="Extension settings"/>

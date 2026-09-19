@@ -86,6 +86,8 @@ The sidebar contains three tabs:
 - **Collections** - Organized groups of requests with folders
 - **Environment** - Manage environment variables
 
+Each tab has a filter box at the top. While it contains text, a **×** button appears inside it — click the × to clear the filter in one action.
+
 ### Request Panel (Center)
 
 The main workspace where you configure and send requests:
@@ -232,8 +234,15 @@ Right-click on a collection for these options:
 - New Folder
 - New Request
 - Run All (Collection Runner)
+- Expand All / Collapse All
 - Export
 - Settings
+
+### Expand All / Collapse All
+
+Right-click a collection or folder for a single menu item that toggles between **Expand All** (when the node is collapsed) and **Collapse All** (when expanded). The action applies only to the node you right-clicked and everything nested under it — the rest of the tree is left as-is.
+
+The context menu also closes automatically when you click into the request panel, switch to another editor or panel, click anywhere else in VS Code, or press **Escape**.
 
 ### Drag and Drop
 
@@ -276,6 +285,10 @@ Environment variables let you store values that can be reused across requests. T
 4. Name it (e.g., "Development", "Staging", "Production")
 5. Add key-value pairs
 
+### Filtering Variables
+
+On the Environment page, use the **filter box** above the variable table to find a variable by **name or value** (case-insensitive). Filtering only changes what's shown — adding, editing, deleting, and **Save** still apply to the full set of variables. Click the **×** in the filter box to clear it.
+
 ### Using Variables
 
 Reference variables in any input field using double curly braces:
@@ -284,7 +297,7 @@ Reference variables in any input field using double curly braces:
 {{auth_token}}
 ```
 
-Variables with values are highlighted in **green**. Variables without values are highlighted in **red**.
+Variables that resolve are highlighted in **green**; unresolved variables are highlighted in **red**. A token resolves from the selected environment, the **Global** environment, or the request's own **Set Variables** entries. Highlighting updates live — when a script or another open request panel saves a value, the matching `{{token}}` turns green immediately without reopening the request.
 
 ### Setting Active Environment
 
@@ -561,8 +574,10 @@ Execute multiple requests in sequence to test entire workflows.
    - Select which requests to include
    - Set iteration count
    - Choose delay between requests
-4. Click **Run**
+4. Click **Run** — the button is disabled while the run is in progress and re-enabled when it finishes or is cancelled, so you can't start a second run on top of the first
 5. View results including pass/fail status for each request and test
+
+> If a request's post-response script sets a variable (via **Set Variables** or `fp.setEnvVar`) during a run, any Environment panels you already have open reload automatically to show the persisted value.
 
 ![Collection Runner](https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-runtests.png?raw=true)
 
@@ -590,6 +605,8 @@ Generate ready-to-use code snippets from your configured requests.
 2. Click the **`</>`** (code) icon in the request panel
 3. Select your target language and library
 4. Copy the generated code
+
+The generated **Shell / cURL** snippet is cross-platform: it uses double quotes, stays on a single line, and compacts JSON/XML bodies so it can be pasted into Windows cmd.exe/PowerShell as well as macOS/Linux bash/zsh without edits.
 
 ![Code Generation](https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-code-snippet.png?raw=true)
 
@@ -807,13 +824,17 @@ To remove all collections, folders, requests, and saved examples at once:
 
 ## cURL Integration
 
-### Importing cURL Commands
+### Import or Run a cURL Command
 
 1. Click the hamburger menu in the sidebar
 2. Select **"Import/Run Curl"**
-3. Paste your cURL command
-4. Flashpost parses and populates the request configuration
-5. Click **Send** to execute
+3. Choose a mode:
+   - **Import** — parse the command into a request and save it into a collection/folder
+   - **Run (Without Save)** — execute the command immediately and view the response inline
+4. Paste your cURL command into the editor (syntax-highlighted for shell)
+5. Click **Import** or **Run**
+
+The command editor uses Monaco with shell syntax highlighting. In **Run** mode, the command and response are split by a **draggable separator** you can drag to resize either pane, and a **Cancel** button stops a request that's still in flight.
 
 ### Example
 
@@ -825,6 +846,20 @@ curl -X POST https://api.example.com/users \
 ```
 
 This creates a POST request with the URL, headers, and body automatically configured.
+
+### Windows Commands
+
+Commands copied from Windows use double quotes with backslash-escaped inner quotes, for example:
+
+```bat
+curl --request POST --url https://api.example.com/login --header "Content-Type: application/json" --data "{\"userId\":\"CONN\",\"password\":\"secret\"}"
+```
+
+Flashpost un-escapes these correctly, so the body is imported as a real JSON/XML object rather than an escaped string. Single-quoted (bash/zsh) commands are also supported.
+
+### Force IPv4 / IPv6
+
+Add `-4` / `--ipv4` or `-6` / `--ipv6` to the command to pin the connection to a specific IP family (useful for hosts that resolve to both).
 
 ---
 
@@ -920,7 +955,7 @@ Access settings via the gear icon in the sidebar or through VS Code Settings.
 > **Note:** When a connection fails (server not running, connection refused), Flashpost automatically retries every 2 seconds until the configured timeout is reached. The Cancel button stops retries immediately.
 | History Limit | 25 | Number of history items to display |
 | Default Sidebar Tab | Collections | Tab shown when sidebar opens |
-| SSL Check | true | Enable strict SSL verification |
+| SSL Check | true | Verify server TLS certificates. Turn **off** to call endpoints with self-signed, untrusted-root, expired, or hostname-mismatched certificates |
 
 ![Settings](https://github.com/subasraj/flashpost-support/blob/main/images/flashpost-extension-settings.png?raw=true)
 
@@ -983,9 +1018,12 @@ Right-click any open request or environment tab to access additional actions:
 
 ### Request Fails with SSL Error
 
-Disable strict SSL checking in settings:
+Errors such as `DEPTH_ZERO_SELF_SIGNED_CERT`, `UNABLE_TO_VERIFY_LEAF_SIGNATURE`, `CERT_HAS_EXPIRED`, or `ERR_TLS_CERT_ALTNAME_INVALID` mean the server's certificate isn't trusted (self-signed, untrusted root, expired, or hostname mismatch). To connect anyway:
+
 - Open Extension Settings
 - Uncheck **"SSL Check"**
+
+With SSL Check off, certificate verification is skipped for every request path — the main request, OAuth 2.0 token fetches, and requests that follow redirects or go through a proxy.
 
 ### Data Not Loading
 
