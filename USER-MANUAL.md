@@ -572,10 +572,13 @@ Execute multiple requests in sequence to test entire workflows.
 2. Select **"Run All"**
 3. Configure runner settings:
    - Select which requests to include
-   - Set iteration count
+   - Set iteration count (with an optional delay between iterations)
    - Choose delay between requests
+   - Pick **Sequential** or **Parallel** run mode
 4. Click **Run** — the button is disabled while the run is in progress and re-enabled when it finishes or is cancelled, so you can't start a second run on top of the first
 5. View results including pass/fail status for each request and test
+
+> All configured iterations run even when you select only a subset of requests — including when the last request in the collection is unchecked. This applies to both Sequential and Parallel modes.
 
 > If a request's post-response script sets a variable (via **Set Variables** or `fp.setEnvVar`) during a run, any Environment panels you already have open reload automatically to show the persisted value.
 

@@ -2,6 +2,14 @@
 
 All notable changes to Flashpost are documented in this file.
 
+## [2.0.27] - 2026-09-22
+### Improvements
+- **Spring Boot Actuator responses formatted as JSON** — Responses with the `application/vnd.spring-boot.actuator.v3+json` (and `v2`) content type are now recognized as JSON and pretty-printed/highlighted instead of shown as raw text. The media type is also available in the Content-Type suggestions on the header table.
+- **Context menu closes on click outside for all sidebar tabs** — Clicking into the request panel, another editor, or anywhere else in VS Code (or pressing Escape) now closes an open right-click menu on the **History** and **Environment** tabs, matching the existing behavior on the **Collections** tab.
+
+### Bug Fixes
+- **Run All iterations stopped after one pass with a partial selection** — Fixed multi-iteration runs ending after the first iteration when the selected requests didn't include the last request in the collection (e.g. trailing requests unchecked). Iteration advance now depends on whether another selected request remains, not on collection position — fixed for both Sequential and Parallel runs.
+
 ## [2.0.26] - 2026-09-18
 ### Features
 - **Expand All / Collapse All on collection tree nodes** — The collection/folder right-click menu now has a single toggle that reads **Expand All** when the node is collapsed and **Collapse All** when expanded. It acts only on the node you right-clicked and its descendants, not the whole tree.
